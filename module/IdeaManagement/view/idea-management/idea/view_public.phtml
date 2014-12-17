@@ -1,0 +1,73 @@
+<!-- box1 -->
+<div class="box_idea">
+    <div class="subject">
+        <H2 class="ttl_idea">
+            <?php echo $this->ideaHelper()->getIcon($idea); ?>
+            <?php
+            echo $this->idea->idea_title;
+            if ($this->idea->idea_categoryID != 0) {
+                echo " (" . $this->categoryTable->getById($this->idea->idea_categoryID)->cat_text . ")";
+            }
+            ?></H2>
+        <div class="good_idea">
+            <SPAN><?php echo $this->idea->idea_followCnt; ?></SPAN>
+        </div>
+        <BR class="clear">
+    </div>
+    <div class="box1" style="position: relative;">
+        <DL>
+            <DT>
+            <?php echo $this->usrHelper()->getIcon($originator); ?>
+            <SPAN id="ideaOriginator"><?php echo $originator->displayName(); ?></SPAN></a><SPAN id="ideaDT" class="time">posted at <?php echo $this->idea->idea_timeStamp; ?></SPAN>
+            <!--MENU-->
+            <div class="menu" style="position: absolute;right: 5px;">
+                <!--<H3><img class="idea-menu" style="cursor: pointer;" src="<?php echo $this->basePath(); ?>/images/icn_down.png" height="17" width="24"></H3>-->
+               
+            </div>
+            <!--END OF MENU-->
+            </DT>
+            <DD>
+                <?php $youtube = $this->youtube($idea->idea_attachment); ?>
+                <?php if ($youtube): ?>
+                    <div style="display:inline-block;float: left;">
+                        <?php echo $youtube; ?>
+                    </div>
+                <?php else: ?>
+                    <img src="<?php echo $this->basePath() ?>/images/img_idea.png" height="210" width="340">
+                <?php endif; ?>
+                <div id="ideaDesc" class="idea_box">
+                    <P><?php echo $this->idea->idea_descript; ?></P>
+                </div>
+            </DD>
+        </DL>
+
+    </div>
+    <div class="clear"></div>
+    <div class="box" style="overflow: hidden;">
+        <div class="evolution" style="width: 45%;float: left;">
+            <H3 style="text-decoration: underline;">Evolution</H3> 
+            <?php echo $this->ideaHelper()->getEvolution($idea); ?>
+        </div>
+        <div class="reference" style="width: 45%;float: left;">
+            <H3 style="text-decoration: underline;margin-bottom: 5px;">Reference</H3> 
+            <?php echo $this->ideaHelper()->getReference($idea->idea_id); ?>
+        </div>
+    </div>
+    <div class="box">
+        <div class="project" style="width: 45%;float: left;">
+            <H3 style="text-decoration: underline;">Project</H3>
+            <?php echo $this->ideaHelper()->getProject($idea); ?>
+        </div>
+        <div class="follower" style="width: 45%;float: left;">
+            <H3 style="text-decoration: underline;">Followers</H3>
+            <?php echo $this->ideaHelper()->getfollower($idea->idea_id); ?>
+        </div>
+    </div>
+
+    <!-- res -->
+    <div class="res">
+        <?php echo $this->ideaHelper()->getCommentGuest($idea); ?>
+    </div>
+    <!-- // res -->
+    <div class="clear"></div>
+</div>

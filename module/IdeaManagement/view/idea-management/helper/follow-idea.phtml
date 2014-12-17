@@ -1,0 +1,13 @@
+<?php if ($isOwner): ?>
+    <?php if ($projectId=$projectTable->isIdeaStarted($ideaId)): ?>
+        <a href="<?php echo $this->url('project/action-id', array('action' => 'view', 'id' => $projectId)); ?>"><?php echo $this->translate('View Project'); ?></a>
+    <?php else: ?>
+        <a href="<?php echo $this->url('project/action', array('action' => 'new'), array('query' => array('idea' => $ideaId))); ?>"><?php echo $this->translate('Start a Project'); ?></a>
+    <?php endif; ?>
+<?php else: ?>
+    <?php if ($followTable->isUserFollowIdea($userId, $ideaId)): ?>
+        <a href="<?php echo $this->url('idea/action-id', array('action' => 'unfollow', 'id' => $ideaId)); ?>"><?php echo $this->translate('Unsubscribe'); ?></a>
+    <?php else: ?>
+        <a href="<?php echo $this->url('idea/action-id', array('action' => 'follow', 'id' => $ideaId)); ?>"><?php echo $this->translate('Subscribe'); ?></a>
+    <?php endif; ?>
+<?php endif; ?>

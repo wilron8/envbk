@@ -1,0 +1,10 @@
+<?php echo $this->listErrors($this->context->errors);       ?>
+<a href="<?php echo $this->url('user', array('action' => 'settings')); ?>"><?php echo $this->translate('Go back to settings'); ?></a>
+<?php if (isset($this->success) && $this->success == true): ?>
+    <p>A verification email has been sent. Please confirm your email.</p>
+<?php else: ?>
+    <?php echo $this->form()->OpenTag($form); ?>
+    <?php echo $this->formCollection($form); ?>
+    <input type="submit" name="submit" value="<?php echo $this->translate('Add'); ?>" />
+    <?php echo $this->form()->closeTag($form); ?> 
+<?php endif; ?>

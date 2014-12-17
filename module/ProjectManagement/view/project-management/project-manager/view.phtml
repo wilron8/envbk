@@ -1,0 +1,82 @@
+<?php if (isset($this->notFound)): ?>
+    <?php echo $this->listErrors($this->context->errors); ?>
+<?php else: ?>
+    <div class="box_project">
+        <div class="subject">
+            <H2 class="title">
+                <?php echo $this->projHelper()->getIcon($this->project); ?>
+                <?php echo $this->project->proj_title; ?>
+            </H2>
+            <div class="status">
+            <?php
+             //echo ($project->proj_isClosed == 1 ? $this->translate('Closed') : $this->translate('In Progress')); 
+                if ($project->proj_isClosed == 1) {
+                    echo $this->translate('Closed');
+                } else {
+                    echo ($project->proj_progress > 0) ? $this->translate('Progress: '.number_format($project->proj_progress,0).'%') : $this->translate('In Progress');                    
+                }
+             ?>
+         </div>
+            <BR class="clear">
+        </div>
+
+        <div class="content">
+            <div style="float: left;overflow: hidden;">
+                <?php $user = $this->projHelper()->getOwner($project->proj_id); ?>
+                <?php echo $this->usrHelper()->getIcon($user); ?>
+                <SPAN id="projectStarter">
+                   <?php echo $this->displayName($user); ?> 
+                </SPAN>
+                <SPAN id ="projectTime" class="time">started at <?php echo $project->proj_timeStamp; ?></SPAN>
+                <BR />
+                <BR />
+                <?php if (count($this->members) > 0): ?>
+                    <UL>
+                        <?php foreach ($this->members as $mem): ?>
+                            <LI style="list-style-type: none;height: 36px;margin: 2px;">
+                                <a title="<?php echo $this->displayName($mem); ?>" target="_blank" href="<?php echo $this->url('people/profile', array('id' => $mem['usr_id'])); ?>">
+                                    <?php echo $this->usrHelper()->getIcon($mem); ?>
+                                </a>
+                            </LI>
+                        <?php endforeach; ?>
+                    </UL>   
+                <?php endif; ?> 
+            </div>
+            <?php if ($project->proj_isClosed != 1): ?>
+                <div id="project_menu">
+                    <?php echo $this->projHelper()->buildMenu($project, $isOwner, $user); ?>
+                </div>
+            <?php endif; ?>
+            <BR class="clear" />
+            <div  id="projectDesc" class="description">
+                <P><?php echo $this->project->proj_descript; ?></P> 
+                    <?php 
+                        //echo preg_replace('/<a[^>]*>([\s\S]*?)<\/a>/','<a href="$1" class="testing_lang_ni_jud">$1</a>',$this->project->proj_descript);//$this->project->proj_descript;
+                    //echo $this->project->proj_descript; 
+                    ?>
+                
+            </div>
+            <?php if ($this->project->proj_srcIdea !== ''): ?>
+                <div class="source_idea">
+                    <P>Working on the following idea:</P>
+                    <?php $idea = $this->projHelper()->getIdea($this->project->proj_srcIdea); ?>
+                    <?php echo $this->ideaHelper()->getIcon($idea); /* GitHub Issue 278 */ ?>
+                </div>
+            <?php endif; ?>
+
+            <BR class="clear">
+        </div>
+
+        <?php if ($this->laIdentity() && $this->projHelper()->isMember($project->proj_id,$this->laIdentity()->usr_id)): ?>
+            <!-- res -->
+            <div class="res">
+                <?php echo $this->projHelper()->getComment($project->proj_id); ?>
+            </div>
+            <!-- // res -->
+        <?php endif; ?>
+    </div>
+
+<?php endif; ?>
+<script type="text/javascript">
+    elemListInsertAttr(document.getElementsByClassName('description'),['rel="nofollow"','target="_blank"']);
+</script>

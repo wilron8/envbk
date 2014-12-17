@@ -1,0 +1,6 @@
+<p>Dear Admin users,</p>
+
+<p>
+    <a href="<?php echo $this->url('people/profile',['id'=>$user->usr_id],['force_canonical' => true]);?>"><?php echo $user->displayName(); ?></a>
+    has added a new country: <?php echo $country->geoCountry_roman;?>(id:<?php echo $country->geoCountry_id;?>)
+</p>

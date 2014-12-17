@@ -1,0 +1,99 @@
+<?php //echo "<pre>"; print_r($paginator); echo "</pre>"; ?>
+<div id="main-menu-message" style="position: relative;left: 10px;"></div>
+<?php if (count($flashMessages) > 0): ?>
+    <?php foreach ($flashMessages as $msg): ?>
+        <SPAN style="font-style: italic;">  <?php echo $msg; ?></SPAN><BR />
+    <?php endforeach; ?>
+<?php endif; ?>
+<?php if (count($paginator) > 0): ?>
+
+    <?php foreach ($paginator as $message): ?>
+        <?php $user = $this->msgHelper()->getUser($message['msg_senderID']);?>
+        <div class="message_box box">
+            <div class="subject">
+                <H2 class="title">
+                    <span class="chkbox-msg-container">
+                        <input type="checkbox" class="chkbox-msg-frm" value="<?php echo $message['msg_threadID']/*$message['msg2_id']*/.'|'.$message['msg_senderID']; ?>">
+                    </span>
+                    <a href="<?php echo $this->url('message/action-id', array('action' => 'view', 'id' => $message['msg_id'])) ?>" style="font-weight: <?php echo $message['msg2_isRead'] == 0 ? 'bold' : 'normal' ?>"><?php echo $message['msg_subject']; ?></a>
+                    <div class="sub-menu-message" style="float: right;position: relative;top: -9px;"></div>
+                </H2>
+            </div>
+            <div class="content">
+                <div class="sender">
+                    <div class="name">
+                        <a style="text-decoration: none;" href="<?php //echo $this->url('people/profile', array('id' => $message['msg_senderID'])) ?>">
+                            <?php echo $this->usrHelper()->getIcon($user); ?>
+                            <?php echo $this->displayName($user); ?>
+                        </a>
+                    </div>
+                    <div class="time">
+                        <?php echo $message['msg_timeStamp']; ?>
+                    </div>
+                </div>
+                <div class="body">
+                    <?php echo $message['msg_body']; ?>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+
+
+<?php else: ?>
+    <P>You have no messages. There are many people full of ideas just waiting for you to message them!</P>
+<?php endif; ?>
+<script type="text/javascript">
+    elemListInsertAttr(document.getElementsByClassName('body'),['rel="nofollow"','target="_blank"']);
+    Ext.onReady(function(){
+
+        if(LApp.count.messages > 0){
+            
+            Ext.select('.chkbox-msg-frm').on('change', function(e, elem) {
+                
+                var totalChkboxMsg = Ext.select('.chkbox-msg-frm').elements.length;
+                var totalChkboxMsgcheck = 0;        
+                var totalChkboxMsgSelected = [];
+
+               Ext.select('.chkbox-msg-frm').each(function(el){
+                     if(el.dom.checked == true){
+                        totalChkboxMsgcheck = totalChkboxMsgcheck + 1;
+                        totalChkboxMsgSelected.push(el.dom.value);
+                    }     
+                        //console.log(el.dom.value);                                   
+                });
+
+               var myBtn = Ext.getCmp('selectallmsg');
+               if(totalChkboxMsg === totalChkboxMsgcheck){
+                     //Ext.select('.selectallmsg').setText('Select All');
+                    //Ext.getCmp('selectallmsg').checked = true;
+                    Ext.getCmp('selectallmsg').setText('Unselect All');
+                    
+                    //myBtn.fireEvent('click', myBtn);
+                    //console.log(Ext.getCmp('selectallmsg').fireEvent('click'));
+                    
+                    console.log('Check all!');
+               } else {
+                    //Ext.select('.selectallmsg').setText('Unselect All');
+                    //Ext.getCmp('selectallmsg').checked = false;
+                    Ext.getCmp('selectallmsg').setText('Select All');
+
+                    console.log('Uncheck all!');
+                    //console.log(Ext.getCmp('selectallmsg').fireEvent('click'));
+               }
+                
+                if(totalChkboxMsgcheck > 0){
+                    Ext.getCmp('deleteselectedmsg').setDisabled(false);
+                    Ext.getCmp('exportselectedmsg').setDisabled(false);
+                } else {
+                    Ext.getCmp('deleteselectedmsg').setDisabled(true);
+                    Ext.getCmp('exportselectedmsg').setDisabled(true);
+                }
+                
+               //Ext.getCmp('selectallmsg').fireEvent('click');
+
+            });           
+           
+        }
+        
+    });   
+</script>

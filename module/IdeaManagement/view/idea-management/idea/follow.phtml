@@ -1,0 +1,5 @@
+<?php if (isset($this->notFound)): ?>
+    <?php echo $this->listErrors($this->context->errors); ?>
+<?php else: ?>
+    <i><?php echo $this->msg?></i>
+<?php endif; ?>

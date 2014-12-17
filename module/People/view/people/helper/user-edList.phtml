@@ -1,0 +1,23 @@
+<h3 style="text-decoration: underline;"><?php echo $this->translate('Education');?></h3>
+<?php if (count($data) > 0): ?>
+    <table>
+        <?php foreach ($data as $d): ?>
+            <tr>
+                <td style="width: 130px;">
+                    <?php echo $d['ed_name']; ?>
+                </td>
+                <td>
+                    <?php echo $d['ed_major']; ?>
+                </td>
+                <td style="width: 130px;">
+                    <?php echo $d['ed_fromDate']; ?>
+                </td>
+                <td>
+                    <?php echo $d['ed_toDate']; ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+<?php else: ?>
+    <i><?php echo $this->translate('(There is no education data)'); ?></i>
+<?php endif; ?>

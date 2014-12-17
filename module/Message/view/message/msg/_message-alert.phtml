@@ -1,0 +1,40 @@
+<p><?php echo sprintf($this->translate('THIS IS BEING SENT FROM AN UNMONITORED MAILBOX. PLEASE DO
+    NOT REPLY TO THIS EMAIL. IF YOU HAVE QUESTIONS, PLEASE
+    CONTACT %shelp@linspira.com%s.'), '<a href="mailto:help@linspira.com">', '</a>'); ?></p>
+
+<p><?php echo sprintf($this->translate('Dear %s'), $name); ?>,</p>
+
+<p><?php echo $this->translate('You have a new message!'); ?></p>
+
+<p>
+    <?php echo $this->translate('From'); ?>: <?php echo $from; ?><br />
+    <?php echo $this->translate('To'); ?>: <?php echo implode(', ', $recepients); ?><br />
+    <?php echo $this->translate('Subject'); ?>: <?php echo $msg->msg_subject; ?>
+</p>
+<p>
+    ++++++++++++++++++++++++++++++
+</p>
+<p>
+    <?php echo $msg->msg_body; ?>
+</p>
+<p>
+    ==============================
+</p>
+<p>
+    <?php echo sprintf($this->translate('Click on this %s%s%s to reply.'), '<a href="' . $this->url('message/action-id', array('action' => 'reply', 'id' => $msg->msg_id), array('force_canonical' => true)) . '">', $this->url('message/action-id', array('action' => 'reply', 'id' => $msg->msg_id), array('force_canonical' => true)), '</a>'); ?> 
+</p>
+<p>
+    <?php echo $this->translate("If your browser doesn't open when you click the link, please
+    cut and paste the link into the address bar on your browser."); ?></p>
+
+<p>
+    <?php echo $this->translate('**Help'); ?><br />
+    <?php echo sprintf($this->translate('If you have any questions, contact one of our Customer
+    Service associates at %shelp@linspira.com%s.'), '<a href="mailto:help@linspira.com">', '</a>'); ?></p>
+<p>
+    <?php echo $this->translate('Sincerely,'); ?>
+</p>
+<p>
+    <?php echo sprintf($this->translate('Customer Service at %sLinspira.com%s [Tokyo, Japan]'), '<a href="http://linspira.com">', '</a>'); ?><br />
+    <?php echo sprintf($this->translate('Sent to: %s'), $email); ?>
+</p>

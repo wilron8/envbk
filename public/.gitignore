@@ -1,0 +1,10 @@
+INSTALL.txt
+LICENSE.txt
+nbproject/
+_notes/
+.svn/
+dwsync.xml
+/.DS_Store
+.DS_Store
+index.html
+app.js

@@ -1,0 +1,14 @@
+<?php echo $this->listErrors($this->context->errors); ?>
+<?php echo $this->listSuccess($this->context->success); ?>
+<?php if (!$this->invalid): ?>
+    <?php if ($this->success): ?>
+        <p><?php echo $this->translate('Your email is successfully changed!'); ?></p>
+    <?php else: ?>
+        <form method="post">
+            <LABEL><?php echo $this->translate('Please type in your password'); ?></LABEL>
+            <INPUT type="password" name="password" />
+            <INPUT type="submit" value="<?php echo $this->translate('Submit'); ?>" />
+        </form>
+    <?php endif; ?>
+<?php endif; ?>
+

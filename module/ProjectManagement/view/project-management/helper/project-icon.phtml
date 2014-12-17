@@ -1,0 +1,8 @@
+<a class="project" href="<?= $this->url('project/action-id',['action'=>'view','id'=>$proj_id]);?>">
+ <?php if ($proj_img === "" || $proj_img === NULL): ?>
+    <span class="icon-projects" style="height: 32px;width: 32px;display: inline-block;"></span>
+<?php else: ?>
+    <img src="<?php echo $this->url('process-image', array('path' => $this->pathManager()->buildProjectRoutePath($proj_id, \DocumentManager\Model\ResourceType::ICON, $proj_img))); ?>" style="height:32px;width:32px;" />
+<?php endif; ?>   
+</a>
+

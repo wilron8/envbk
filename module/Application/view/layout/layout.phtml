@@ -1,0 +1,352 @@
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<?php
+// <!DOCTYPE html>
+echo($this->doctype('HTML5'));
+/*
+  var_dump($this->url()); // DO NOT USE!!!! this causes route reading issues in ZF v2.5. Use $_SERVER['REQUEST_URI'] instead!
+  echo ($_SERVER['REQUEST_URI'] );
+
+
+  if($this->laIdentity()){
+  //var_dump($_SESSION);
+  var_dump($this->laIdentity());
+  $userTable = $this->getServiceLocator()->get('UserTable');
+  echo $userTable->getUserISO639($this->laIdentity()->usr_id);
+  }
+
+ */
+
+
+echo("\n");
+//set lang to user setting!
+if ($this->laIdentity()) {
+    echo("<html xmlns=\"http://www.w3.org/1999/xhtml\" itemscope=\"\" xml:lang=\"" . $this->laIdentity()->geoLang_ISO639 . "\" lang=\"" . $this->laIdentity()->geoLang_ISO639 . "\">\n");
+} else {
+    echo("<html xmlns=\"http://www.w3.org/1999/xhtml\">\n");
+}
+
+//TODO: set HTML <title> to current page type: messages / idea / people / projects... etc...
+?>
+<head>
+    <meta charset="utf-8" />
+    <meta name="Content-Language" content="english" />
+    <!-- meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" -->
+    <meta http-equiv="imagetoolbar" content="no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="content-script-type" content="text/javascript" />
+    <meta http-equiv="content-style-type" content="text/css" />
+    <meta http-equiv="CACHE-CONTROL" content="NO-CACHE" />
+    <meta http-equiv="PRAGMA" content="NO-CACHE" />
+    <meta http-equiv="EXPIRES" content="Sun, 01 Jul 2012 00:00:01 GMT" />
+    <meta name="DC.creator" content="Richie Bartlett Jr. - http://www.RichieBartlett.com/" />
+    <meta name="DC.language" content="en" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="copyright" content="Copyright <?php echo(date("Y")); ?>" />
+    <meta name="keywords" content="idea evolution" />
+    <meta name="description" content="Linspira - Where IDEAs evolve!" />
+    <meta name="Author" content="Richie Bartlett" />
+    <meta name="revisit-after" content="30 days" />
+    <meta name="distribution" content="global" />
+    <meta name="rating" content="general" />
+<?PHP if ($_SERVER['REQUEST_URI'] === "/") { ?>
+	<meta name="robots" content="index, follow" /> <!-- (Robot commands: All, None, Index, No Index, Follow, No Follow) -->
+<?PHP } else { ?>
+	<meta name="robots" content="none" />
+<?PHP } ?>
+    <meta name="GOOGLEBOT" content="NOARCHIVE" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/ico" />
+    <link rel="icon" href="/images/favicon.ico" type="image/ico" />
+    <link rel="apple-touch-icon" href="/images/favicon.ico" />
+
+
+<?PHP if ($_SERVER['REQUEST_URI'] !== "/join" && $_SERVER['REQUEST_URI'] !== "/signin") { ?>
+        <link rel="stylesheet" href="<?php echo $this->basePath(); ?>/extjs4/packages/ext-theme-gray/build/resources/ext-theme-gray-all.css" />
+<?PHP } ?>
+    <script src="<?php echo $this->basePath(); ?>/extjs4/ext-all-dev.js"></script>
+    <script src="<?php echo $this->basePath(); ?>/js/drawColor.HSB.js"></script>
+    <script src="<?php echo $this->basePath(); ?>/js/string.prototypes.js"></script>
+    <script src="<?php echo $this->basePath(); ?>/js/baseIncludes.js"></script>
+    <script type="text/javascript">
+        Ext.Loader.setConfig({
+            enabled: true,
+            garbageCollect: true
+        });
+        Ext.Loader.setPath('envitz', '<?php echo $this->basePath(); ?>/envitz');
+        Ext.Loader.setPath('Ext.ux', '<?php echo $this->basePath(); ?>/extjs4/ux');
+        //Ext.Loader.setPath('Ext.Crypto', '<?php echo $this->basePath(); ?>/js/extjs-crypto');
+
+        var LApp = {
+            messages: {},
+            search: {
+<?PHP if ($this->laIdentity()) { ?>
+                msg: 1,
+                ppl: 1,
+                idea: 1,
+                ideaComment: 0,
+                project: 1,
+                projectComment: 0,
+				documentManager: 0
+<?PHP } else { ?>
+                msg: 0,
+                ppl: 1,
+                idea: 1,
+                ideaComment: 0,
+                project: 1,
+                projectComment: 0,
+				documentManager: 0
+<?PHP } ?>
+            },
+<?PHP
+echo("		basePath: \"" . $this->basePath() . "\", \n");
+echo("		isGuest: " . ($this->laIdentity()? "false" : "true") . ", \n");
+if ($this->laIdentity()) {
+    echo("		MAX_FILE_SIZE: " . (\DocumentManager\Model\ImgManager::getMaxUploadSize()) . ", \n");
+    echo("		user : { \n");
+    echo("			id: \"" . $this->laIdentity()->usr_id . "\", \n");
+    echo("			username: \"" . $this->laIdentity()->usr_username . "\", \n");
+    echo("			displayName: \"" . $this->laIdentity()->usr_displayName . "\", \n");
+    echo("			fName: \"" . $this->laIdentity()->usr_fName . "\", \n");
+    echo("			lName: \"" . $this->laIdentity()->usr_lName . "\", \n");
+    echo("			iso639: \"" . $this->laIdentity()->geoLang_ISO639 . "\", \n");
+    echo("/* ");
+    $userAvatar = ($this->laIdentity()->usr_icon=="" || $this->laIdentity()->usr_icon==NULL)? "false" : "\"" . $this->url('process-image', array('path' => $this->pathManager()->buildUserRoutePath($this->laIdentity()->usr_id, \DocumentManager\Model\ResourceType::ICON, $this->laIdentity()->usr_icon))) . "\"";
+    echo("*/		photo: $userAvatar \n"); //this should be the base64 encoded hash of pathway
+    echo("		}, \n");
+    echo("		LocalIPaddress: \"" . $_SERVER['REMOTE_ADDR'] . "\", \n");
+    echo("		LocalIPport: \"" . $_SERVER['REMOTE_PORT'] . "\", \n");
+	echo("		LocalLang: \"" . $_SERVER['HTTP_ACCEPT_LANGUAGE'] . "\" \n");
+} else {
+    echo("		guestLogin: \"" . $this->url('user',array('action'=>'signin')) . "\", \n");
+    echo("		guestJoin: \"" . $this->url('user',array('action'=>'join')) . "\", \n");
+	
+}
+?>
+        };//end LApp
+		LApp.width = (screen.width) ? screen.width:'';
+		LApp.height = (screen.height) ? screen.height:'';
+		// check for windows off standard dpi screen res
+		if(typeof(screen.deviceXDPI) == 'number') {
+			LApp.width *= screen.deviceXDPI/screen.logicalXDPI;
+			LApp.height *= screen.deviceYDPI/screen.logicalYDPI;
+		} 
+        LApp.t = function(key) {
+            if (this.messages[key]) {
+                return this.messages[key];
+            } else {
+                return key;
+            }
+        };
+
+<?PHP if ($_SERVER['REQUEST_URI'] == "/" || $_SERVER['REQUEST_URI'] == "/join" || $_SERVER['REQUEST_URI'] == "/signin") { ?>
+        Ext.require('envitz.view.ForgotPassword');
+        Ext.onReady(function() {
+			try{
+				document.getElementById('xDPI').value=LApp.width;
+				document.getElementById('yDPI').value=LApp.height;
+				document.getElementById('x').value=LApp.width;
+				document.getElementById('y').value=LApp.height;
+			}catch(e){}
+            var forgotPassChallenger = null;
+            Ext.select('a.forgot_password').on('click', function(e) {
+                e.preventDefault();
+                forgotPassChallenger = Ext.create('envitz.view.ForgotPassword');
+                forgotPassChallenger.show();
+            });
+        });
+<?PHP } ?>
+
+    //From LApp file
+    (function(Ext) {
+        var LApp = window.LApp;
+
+        /**
+         * Error display when there is a failed ajax submission
+         * 
+         * @returns {undefined}
+         */
+        LApp.connectionFailure = function() {
+            Alert('Error', 'Network Operation Timed-out. Your connection to the server was lost. Please check your Internet connection and try again later.');
+        };
+
+        /**
+         * Function to follow/unfollow an idea and update followButton accordingly
+         * 
+         * @param {integer} ideaId
+         * @param {integer} followStat 1=>follow, 2=>unfollow
+         * @param {function} callback
+         * @returns {void}
+         */
+        LApp.foUnfoIdea = function(holder, ideaId, followStat, callback) {
+            var follow = '<a class="idea-founfo" href="/idea/follow/' + ideaId + '" data-id="' + ideaId + '" data-type="follow" title="Follow" style="text-decoration: none;"><img width="24" height="24" src="/images/icn_star.png"> <span>{{followCnt}}</span>',
+                    unfollow = '<a class="idea-founfo" href="/idea/unfollow/' + ideaId + '" data-id="' + ideaId + '" data-type="unfollow" title="Unfollow" style="text-decoration: none;"><img width="24" height="24" src="/images/unfollow_star.png"> <span>{{followCnt}}</span>',
+                    url;
+
+            //return if follwStat is not in (1,2)
+            if (followStat === 1 || followStat === 2) {
+                if (followStat === 1) {
+                    url = '/idea/follow/' + ideaId;
+                } else {
+                    url = '/idea/unfollow/' + ideaId;
+                }
+
+                Ext.Ajax.request({
+                    url: url,
+                    success: function(response) {
+                        var svrMsg = Ext.JSON.decode(response.responseText);
+                        if (svrMsg.success === true) {
+                            if (followStat === 1) {
+                                var content = unfollow.replace("{{followCnt}}", svrMsg.followCnt);
+                                holder.setHTML(content);
+                            } else {
+                                var content = follow.replace("{{followCnt}}", svrMsg.followCnt);
+                                holder.setHTML(content);
+                            }
+                            if (typeof callback === "function") {
+                                callback();
+                            }
+                        }
+                    },
+                    failure: LApp.connectionFailure
+                });
+            }
+
+        };
+
+        LApp.foUnfoPeople = function(holder, personId, followStat) {
+            var url;
+
+            //return if follwStat is not in (1,2)
+            if (followStat === 1 || followStat === 2) {
+                if (followStat === 1) {
+                    url = '/people/follow/' + personId;
+                } else {
+                    url = '/people/unfollow/' + personId;
+                }
+
+                Ext.Ajax.request({
+                    url: url,
+                    success: function(response) {
+                        var svrMsg = Ext.JSON.decode(response.responseText);
+                        if (svrMsg.success === true) {
+                            if (followStat === 1) {
+                                holder.setHTML('<a class="people-founfo" data-id="' + personId + '" data-type="unfollow" title="Unfollow" href="/people/unfollow/' + personId + '"><img src="/images/unfollow_star.png" height="24" width="24"></a>');
+                            } else {
+                                holder.setHTML('<a class="people-founfo" data-id="' + personId + '" data-type="follow" title="Unfollow" href="/people/follow/' + personId + '"><img src="/images/icn_star.png" height="24" width="24"></a>');
+                            }
+                        }
+                    },
+                    failure: LApp.connectionFailure
+                });
+            }
+
+        };
+
+
+    })(Ext);
+
+    </script>
+     
+<?PHP if ($this->laIdentity()) { ?>
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->basePath(); ?>/css/lang-<?php echo(strtolower($this->laIdentity()->geoLang_ISO639)); ?>.css" />
+    <?PHP } ?>
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->basePath(); ?>/css/<?php echo ( $_SERVER['REQUEST_URI'] === "/" || $_SERVER['REQUEST_URI'] === "/join" || $_SERVER['REQUEST_URI'] === "/signin" ? "index" : "style"); ?>.css" />
+    <title>Linspira.com: <?php echo " - " . $this->translate('Core ProtoType'); /* //TODO: need to change title to match location subtitle... */ ?></title>
+    <?php echo $this->headLink() ?>
+    <?php echo $this->headStyle() ?>
+    <?php echo $this->headScript() ?>
+</head>
+<body>
+
+<?PHP if ($_SERVER['REQUEST_URI'] === "/" || $_SERVER['REQUEST_URI'] === "/join" || $_SERVER['REQUEST_URI'] === "/signin") { ?>
+        <img class="bg" src="<?php echo $this->basePath(); ?>/images/bg_index.jpg">
+        <div id="gamen">
+<?PHP } else { 
+
+    echo $this->laMenuWidget();
+}
+
+echo("<!-- mainArea -->\n<div id=\"mainArea\">");
+echo($this->content);
+//var_dump($this->laIdentity());
+//echo("</div>");
+?>
+
+        <div style="clear: both"></div>
+
+        <!-- TopFooterArea -->
+        <FOOTER>
+            <UL class="foot">
+                <LI><a href="/">Linspira</a></LI>
+                <LI><a href="/legal/privacy">Privacy</a></LI>
+                <LI><a href="/legal/tos.php">Terms</a></LI>
+                <LI><a href="/help">Help</a></LI>
+            </UL>
+            <div class="copyright">Linspira &copy; <?php echo(date("Y")); ?>
+<?php echo $this->translate('All rights reserved.'); ?>
+            </div><!-- Designed & written by Richie Bartlett, Jr. -->
+            <BR class="clear" />
+        </FOOTER>
+        <!-- //TopFooterArea -->
+
+    </div>
+<?PHP if ($_SERVER['REQUEST_URI'] === "/" || $_SERVER['REQUEST_URI'] === "/join" || $_SERVER['REQUEST_URI'] === "/signin") { ?>
+        <!-- //gamen -->
+    <?PHP } ?>
+    <?php echo $this->inlineScript() ?>
+    <script type="text/javascript">
+        Ext.onReady(function() {
+            
+            //bind follow/unfollow idea
+            Ext.select('body').on('click', function(e, dom) {
+            e.preventDefault();
+            var el = Ext.get(dom),
+                    id = el.getAttribute('data-id'),
+                    type = el.getAttribute('data-type'),
+                    holder = el.parent('span.idea_founfo_holder');
+            if (type === 'follow') {
+                LApp.foUnfoIdea(holder, id, 1, function() {
+                    var menu = Ext.getCmp('ideaMenu');
+                    if (menu) {
+                        var follow = menu.down('#followItem'),
+                                unfollow = menu.down('#unfollowItem');
+                        follow.setVisible(false);
+                        unfollow.setVisible(true);
+                    }
+
+                });
+            } else {
+                LApp.foUnfoIdea(holder, id, 2, function() {
+                    var menu = Ext.getCmp('ideaMenu');
+                    if (menu) {
+                        var follow = menu.down('#followItem'),
+                                unfollow = menu.down('#unfollowItem');
+                        follow.setVisible(true);
+                        unfollow.setVisible(false);
+                    }
+                });
+            }
+
+        }, this, {delegate: 'a.idea-founfo'});
+        
+        //bind follow/unfollow people
+         Ext.select('body').on('click', function(e, dom) {
+            e.preventDefault();
+            var el = Ext.get(dom),
+                    id = el.getAttribute('data-id'),
+                    type = el.getAttribute('data-type'),
+                    holder = el.parent('span.people_founfo_holder');
+            if (type === 'follow') {
+                LApp.foUnfoPeople(holder, id, 1);
+            } else {
+                LApp.foUnfoPeople(holder, id, 2);
+            }
+
+        }, this, {delegate: 'a.people-founfo'});
+    });
+    </script>
+</body>
+</html>

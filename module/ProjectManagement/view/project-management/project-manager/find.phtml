@@ -1,0 +1,9 @@
+<?php if (count($results) > 0): ?>
+    <ul>
+        <?php foreach ($results as $p): ?>
+            <li><a href="<?php echo $this->url('project/action-id', array('action' => 'view', 'id' => $p['proj_id'])) ?>"><?php echo $p['proj_title']; ?></a></li>
+        <?php endforeach; ?>
+    </ul>
+<?php else: ?>
+    <p>No result is found.</p>
+<?php endif; ?>

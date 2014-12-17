@@ -1,0 +1,3 @@
+<?php foreach ($feed as $f): ?>
+    <?php echo $this->feed()->render($f['type'], $f['id']); ?>
+<?php endforeach; ?>

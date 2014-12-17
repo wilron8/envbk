@@ -1,0 +1,33 @@
+<?php echo $this->listErrors($context->errors); ?>
+<?php if (!isset($this->notFound)): ?>
+    <div>
+        <button onclick="location.href = '<?php echo $this->url('message/action-id', array('action' => 'forward', 'id' => $msg['msg_id'])); ?>';">Forward</button>
+        <button onclick="location.href = '<?php echo $this->url('message/action-id', array('action' => 'delete', 'id' => $msg['msg_id'])); ?>';">Delete</button>
+    </div>
+    <br />
+    <table>
+        <tr>
+            <td>From:</td>
+            <td>
+                <a target="_blank" href="<?php echo $this->url('people/profile', array('id' => $msg['usr_id'])) ?>">  <?php echo $msg['usr_fName']; ?></a>
+            </td>
+
+        </tr>
+        <tr>
+            <td>To:</td>
+            <td>
+                <?php foreach ($recepients as $recep): ?>
+                    <a target="_blank" href="<?php echo $this->url('people/profile', array('id' => $recep['usr_id'])) ?>">  <?php echo $recep['usr_fName']; ?></a>
+                <?php endforeach; ?>
+            </td>
+        </tr>
+        <tr>
+            <td>Subject:</td>
+            <td><?php echo $msg['msg_subject']; ?></td>
+        </tr>
+        <tr>
+            <td>Message:</td>
+            <td><?php echo $msg['msg_body']; ?></td>
+        </tr>
+    </table>
+<?php endif; ?>

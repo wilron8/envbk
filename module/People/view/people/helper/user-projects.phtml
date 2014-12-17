@@ -1,0 +1,32 @@
+
+<?php if (count($data) > 0): ?>
+    <table class="grid-view">
+        <?php foreach ($data as $d): ?>
+            <tr>
+                <td>
+                    <a class="project" href="<?php echo $this->url('project/action-id', array('action' => 'view', 'id' => $d['proj_id'])); ?>">
+                        <?php echo $this->projHelper()->getIcon($d); ?>
+                        <?php echo $d['proj_title']; ?>
+                    </a>
+                </td>
+                <td style="vertical-align: bottom;min-width: 300px;">
+                    <a class="person" href="<?php echo $this->url('people/profile', array('id' => $d['pMem_memberID'])); ?>">
+                        <?php echo $this->usrHelper()->getIcon($d); ?>
+                        <?php echo $this->displayName($d); ?>
+                    </a>
+                    <?php echo $this->translate('started at'); ?> <?php echo $d['proj_timeStamp']; ?>
+                </td>
+                <td style="vertical-align: bottom;width:110px;">
+                    <?php echo $this->translate('Status'); ?> : <?php echo ($d['proj_isClosed'] ? "Closed" : "In Progress"); ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+<?php else: ?>
+    <?php if ($this->usrHelper()->isCurrentUser($userId)): ?>
+        <a href="<?php echo $this->url('project/action', array('action' => 'new')); ?>"> <I><?php echo $this->translate('No projects yet, would you like to create one?'); ?></I></a>
+    <?php else: ?>
+        <I><?php echo $this->translate('This user has not created any projects yet.'); ?></I>
+    <?php endif; ?>
+
+<?php endif; ?>

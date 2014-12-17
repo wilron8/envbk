@@ -1,0 +1,60 @@
+<DIV class="box">
+    <DIV class="title">
+        <h2>Membership Rejection</h2>
+    </DIV>
+    <DIV class="box_content" style="padding: 20px;">
+        <?php if (isset($success)): ?>
+            <?php if ($success === true): ?>
+                <?php echo $this->translate("Submission is successful."); ?>
+            <?php else: ?>
+                <?php echo $this->translate("Submission failed."); ?>
+            <?php endif; ?>
+        <?php else: ?>
+            <script type="text/javascript">
+                Ext.require('envitz.view.envitzEditor');
+                Ext.onReady(function() {
+                    LApp.envitzEDIT = Ext.create('envitz.view.envitzEditor', {
+                        name: 'reason',
+                        renderTo: 'editor'
+                    });
+                });
+
+            </script>
+            <FORM method="post">
+                <TABLE>
+                    <TR>
+                        <TD>
+                            Project:
+                        </TD>
+                        <TD>
+                            <A href="<?php echo $this->url('project/action-id', array('action' => 'view', 'id' => $project->proj_id)); ?>">
+                                <?php echo $this->projHelper()->getIcon($project); ?>
+                                <?php echo $project->proj_title; ?>   
+                            </A>
+
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TD>
+                            Request by:
+                        </TD>
+                        <TD>
+                            <A href="<?php echo $this->url('project/action-id', array('action' => 'view', 'id' => $project->proj_id)); ?>">
+                                <?php echo $this->usrHelper()->getIcon($user); ?>
+                                <?php echo $this->displayName($user); ?>
+                            </A>
+                        </TD>
+                    </TR>
+                </TABLE>
+                <span><?php echo $this->translate("Please specify reason why you reject the request."); ?></span>
+                <BR><BR>
+                <DIV id="editor">
+                </DIV>
+                <BR>
+                <input type="submit" value="<?php echo $this->translate("Submit Rejection") ?>"/>
+            </FORM>
+        <?php endif; ?>   
+    </DIV>
+
+</DIV>
+

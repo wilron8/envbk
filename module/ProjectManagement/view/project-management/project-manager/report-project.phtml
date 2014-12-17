@@ -1,0 +1,17 @@
+<?php if (isset($success)): ?>
+    <?php echo $this->translate('The violaiton is successfully reported.');?>
+<?php else: ?>
+    <?php
+
+    echo sprintf($this->translate('You are about to report viloation of the project: %s %s %s'), '<a href="' . $this->url('project/action-id', array('action' => 'view', 'id' => $project->proj_id)) . '">'
+            , $project->proj_title, '</a>');
+    ?>
+    <?php echo $this->form()->openTag($this->form); ?>
+    <?php echo $this->formElementErrors($this->form); ?>
+    <?php
+
+    echo $this->formCollection($this->form);
+    ?>
+    <?php echo $this->form()->closeTag(); ?>
+
+<?php endif; ?>

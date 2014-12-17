@@ -1,0 +1,27 @@
+<h2><?php echo $this->translate("You are following");?></h2>
+<?php if (count($followees) > 0): ?>
+    <ul>
+        <?php foreach ($followees as $p): ?>
+        <li><a href="<?php echo $this->url('people/profile', array('id' => $p['usr_id'])); ?>"> <?php echo \Users\Model\DbEntity\User::getDisplayName($p) ?></a>
+                <br /> <?php echo $this->followUserButton($p['usr_id']); ?>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+    <?php
+    //echo $this->paginationControl($this->paginator, 'Sliding', 'people/people/_pagination', array('route' => 'people/list'));
+    ?>
+<?php else: ?>
+    <?php echo $this->translate("You are not following any one yet. Try searching for someone and start following them. "); ?>
+<?php endif; ?>
+<h2><?php echo $this->translate("Your followers");?></h2>
+<?php if (count($followers) > 0): ?>
+    <ul>
+        <?php foreach ($followers as $p): ?>
+        <li><a href="<?php echo $this->url('people/profile', array('id' => $p['usr_id'])); ?>"> <?php echo \Users\Model\DbEntity\User::getDisplayName($p) ?></a>
+                <br /> <?php echo $this->followUserButton($p['usr_id']); ?>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+<?php else: ?>
+    <?php echo $this->translate("You are not yet followed. "); ?>
+<?php endif; ?>

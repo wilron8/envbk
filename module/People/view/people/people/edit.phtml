@@ -1,0 +1,14 @@
+<?php echo $this->listErrors($this->context->errors); ?>
+<?php echo $this->listSuccess($this->context->success); ?>
+<?php echo $this->formElementErrors($form); ?>
+<?php echo $this->form()->openTag($this->form); ?>
+
+<script type="text/javascript">
+    LApp.formData =<?php echo json_encode($data); ?>;
+</script>
+<?php ?>
+
+<div class="box_idea">
+    <H2 class="ttl_idea">Update my profile</H2><BR class="clear">
+    <div class="box1" id="people-profile-edit-panel"></div>
+</div>

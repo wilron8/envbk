@@ -1,0 +1,15 @@
+<span class="idea_founfo_holder">
+    <?php if ($userId && $followTable->isUserFollowIdea($userId, $idea->idea_id)): ?>
+
+        <a class="idea-founfo" data-type="unfollow" data-id="<?= $idea->idea_id;?>" style="text-decoration: none;" title="<?php echo $this->translate('Unfollow'); ?>" href="<?php echo $this->url('idea/action-id', array('action' => 'unfollow', 'id' => $idea->idea_id)); ?>">
+            <img src="<?php echo $this->basePath(); ?>/images/unfollow_star.png" height="24" width="24">
+            <SPAN><?php echo $this->idea->idea_followCnt; ?></SPAN>
+        </a>
+    <?php else: ?>
+        <a class="idea-founfo" data-type="follow" data-id="<?= $idea->idea_id;?>" style="text-decoration: none;" title="<?php echo $this->translate('Follow'); ?>" href="<?php echo $this->url('idea/action-id', array('action' => 'follow', 'id' => $idea->idea_id)); ?>">
+            <img src="<?php echo $this->basePath(); ?>/images/icn_star.png" height="24" width="24">
+            <SPAN><?php echo $this->idea->idea_followCnt; ?></SPAN>
+        </a>
+    <?php endif; ?>
+</span>
+

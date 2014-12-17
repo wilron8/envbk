@@ -1,0 +1,81 @@
+<?php
+/**
+ * Link Aide . com
+ *
+ * @link      http://www.LinkAide.com/sys/ for the canonical source
+ * @copyright Copyright (c) 2011-2013 LinkAide.com
+ * @license   IP of Richie Bartlett, Jr. (RichieBartlett.com)
+ */
+
+
+//TODO: need a clever 404 Page just like GitHub...
+
+
+?>
+<H1><?php echo $this->translate('A 404 error occurred') ?></H1>
+<H2><?php echo $this->message ?></H2>
+
+<?php if (isset($this->reason) && $this->reason): ?>
+
+<?php
+$reasonMessage= '';
+switch ($this->reason) {
+    case 'error-controller-cannot-dispatch':
+        $reasonMessage = $this->translate('The requested controller was unable to dispatch the request.');
+        break;
+    case 'error-controller-not-found':
+        $reasonMessage = $this->translate('The requested controller could not be mapped to an existing controller class.');
+        break;
+    case 'error-controller-invalid':
+        $reasonMessage = $this->translate('The requested controller was not dispatchable.');
+        break;
+    case 'error-router-no-match':
+//        $reasonMessage = $this->translate('The requested URL could not be matched by routing.');
+/**
+	See great examples of 404 pages here:
+	https://github.com/superdweebie/jsonController
+	http://www.businessinsider.com/the-best-404-error-pages-of-all-time-2013-3?op=1
+**/
+        $reasonMessage = $this->translate('This is not the page you were looking for...');
+        break;
+    default:
+        $reasonMessage = $this->translate('We cannot determine at this time why a 404 was generated.');
+        break;
+}
+?>
+
+<P><?php echo $reasonMessage ?></P>
+
+<?php endif ?>
+
+<?php if (isset($this->controller) && $this->controller): ?>
+
+<DL>
+    <DT><?php echo $this->translate('Controller') ?>:</DT>
+    <DD><?php echo $this->escapeHtml($this->controller) ?>
+<?php
+if (isset($this->controller_class)
+    && $this->controller_class
+    && $this->controller_class != $this->controller
+) {
+    echo '(' . sprintf($this->translate('resolves to %s'), $this->escapeHtml($this->controller_class)) . ')';
+}
+?>
+</DD>
+</DL>
+
+<?php endif ?>
+
+<?php if (isset($this->exception) && $this->exception): ?>
+
+<H2><?php echo $this->translate('Exception') ?>:</H2>
+
+<P><B><?php echo $this->escapeHtml($this->exception->getMessage()) ?></B></P>
+
+<H3><?php echo $this->translate('Stack trace') ?>:</H3>
+
+<PRE>
+<?php echo $this->exception->getTraceAsString() ?>
+</PRE>
+
+<?php endif ?>

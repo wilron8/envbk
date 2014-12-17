@@ -1,0 +1,19 @@
+<P><?php echo sprintf($this->translate('THIS IS BEING SENT FROM AN UNMONITORED MAILBOX. PLEASE DO
+    NOT REPLY TO THIS EMAIL. IF YOU HAVE QUESTIONS, PLEASE
+    CONTACT %shelp@linspira.com%s.'), '<a href="mailto:help@linspira.com">', '</a>'); ?></P>
+
+<P><?php echo sprintf($this->translate('Dear Admin Team')); ?>,</P>
+
+
+<P>
+    <?php echo sprintf($this->translate("There is a report violation of an idea titled %s %s %s."),'<a href="'.$this->url('idea/action-id',array('action'=>'view','id'=>$idea->idea_id),array('force_canonical'=>true)).'">',$idea->idea_title,'</a>');?></P>
+
+<P><?php echo $this->translate('Reasons: ');?><BLOCKQUOTE><?php echo $report->vp_comments;?></BLOCKQUOTE> </p>
+<P><?php echo $this->translate("The reporting user is:");?> <A href="http://Linspira.com/people/<?php echo $reporter->usr_id; ?>">"><?php echo $reporter->usr_fName; ?></A></P>
+<P><?php echo $this->translate("The owner of the idea is:");?> <A href="http://Linspira.com/people/<?php echo $owner->usr_id; ?>"><?php echo $owner->usr_fName; ?></A></P>
+
+<P>
+    <?php echo $this->translate('Sincerely,'); ?><BR><BR>
+    <?php echo sprintf($this->translate('Customer Service at %sLinspira.com%s [Tokyo, Japan]'), '<a href="http://linspira.com">', '</a>'); ?><BR />
+
+

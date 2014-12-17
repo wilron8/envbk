@@ -1,0 +1,14 @@
+<?php if (count($notifications) > 0): ?>
+    <?php foreach ($notifications as $ntf): ?>
+        <a class="ntfy" href="<?= $this->url('feed-link', ['id' => $ntf->ntfy_id, 'url' => $this->util()->helpString()->encode($ntf->ntfy_URL)]); ?>">  
+            <div class="ntfy_box<?= $ntf->ntfy_isRead==1?"":' read'?>">
+                <?= $this->util()->helpString()->sanitize($ntf->ntfy_body, ['img', 'span', 'BR'], ['title', 'class', 'style', 'src']); ?>
+            </div>
+        </a>
+    <?php endforeach; ?>
+<?php else: ?>
+    <div class="ntfy_box">
+        <i>There is no outstanding notifications!</i>
+    </div>
+<?php endif; ?>
+

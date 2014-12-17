@@ -1,0 +1,24 @@
+<p><?php echo sprintf($this->translate('THIS IS BEING SENT FROM AN UNMONITORED MAILBOX. PLEASE DO
+    NOT REPLY TO THIS EMAIL. IF YOU HAVE QUESTIONS, PLEASE
+    CONTACT %shelp@linspira.com%s.'), '<a href="mailto:help@linspira.com">', '</a>'); ?></p>
+
+<p><?php echo sprintf($this->translate('Dear %s'),$user->getFullName()); ?>,</p>
+
+
+<p><?php echo sprintf($this->translate('Your request to join the project titled %s%s%s on %slinspira.com%s is already accepted by the project owner.'),'<a href="'.$this->url('project/action-id',array('action'=>'view','id'=>$project->proj_id),array('force_canonical' => true)).'">',$project->proj_title,'</a>','<a href="http://linspira.com">','</a>');?>
+</p>
+<p>
+    <?php echo $this->translate("If your browser doesn't open when you click the link, please
+    cut and paste the link into the address bar on your browser.
+    When you reach the password page using the link, you'll find
+    instructions for resetting your password.");?></p>
+<p>
+    <?php echo $this->translate('**Help'); ?><br />
+    <?php echo sprintf($this->translate('If you have any questions, contact one of our Customer
+    Service associates at %shelp@linspira.com%s.'), '<a href="mailto:help@linspira.com">', '</a>'); ?></p>
+<p>
+    <?php echo $this->translate('Sincerely,'); ?>
+</p>
+<p>
+    <?php echo sprintf($this->translate('Customer Service at %sLinspira.com%s [Tokyo, Japan]'), '<a href="http://linspira.com">', '</a>'); ?><br />
+    <?php echo sprintf($this->translate('Sent to: %s'), $user->usr_email); ?>

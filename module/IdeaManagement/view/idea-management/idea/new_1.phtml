@@ -1,0 +1,13 @@
+<div class="alert">
+    <?php echo sprintf($this->translate('*Maximum upload size is %s.'), \DocumentManager\Model\ImgManager::getMaxUploadMessage()); ?>
+</div>
+<?php echo $this->form()->openTag($this->form); ?>
+<?php
+echo $this->formCollection($this->form);
+?>
+<div>
+    <input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="<?php echo \DocumentManager\Model\ImgManager::getMaxUploadSize(); ?>" />
+    <input type="submit" value="<?php echo $this->translate('Next'); ?>" name="next">
+    <input type="submit" value="<?php echo $this->translate('Cancel'); ?>" name="cancel">
+</div>
+<?php echo $this->form()->closeTag(); ?>

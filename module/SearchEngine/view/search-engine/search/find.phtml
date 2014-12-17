@@ -1,0 +1,73 @@
+<?php
+//TODO: REPLACE this with Sencha form!
+echo $this->form()->openTag($this->form);
+echo $this->formElementErrors($this->form);
+echo $this->formCollection($this->form);
+echo $this->form()->closeTag();
+?>
+<?php if (!isset($nokeyword)): ?>
+    <?php if (isset($people) && count($people) > 0): ?>
+    <div id="people-result">
+        <H2><?php echo $this->translate('People'); ?> (<?php echo count($people); ?>)</H2>
+        <?php if (isset($people) && count($people) > 0): ?>
+            <OL>
+                <?php foreach ($people as $p): ?>
+                    <LI><a href="<?php echo $this->url('people/profile', array('id' => $p['usr_id'])); ?>"> <?php echo \Users\Model\DbEntity\User::getDisplayName($p) ?></a>
+                        <?php if (isset($userId)): ?>
+                            <BR /> <?php echo $this->followUserButton($p['usr_id']); ?>
+                        <?php endif; ?>
+                    </LI>
+                <?php endforeach; ?>
+            </OL>
+
+        <?php endif; ?>
+    </div>
+    <?php endif; ?>
+
+    <?php if (isset($idea) && count($idea) > 0): ?>
+    <div id="idea-result">
+        <H2><?php echo $this->translate('Ideas'); ?> (<?php echo count($idea); ?>)</H2>
+        <?php if (isset($idea) && count($idea) > 0): ?>
+            <OL>
+                <?php foreach ($idea as $id): ?>
+                    <LI> <a href="<?php echo $this->url('idea/action-id', array('action' => 'view', 'id' => $id['idea_id'])) ?>"><?php echo $id['idea_title']; ?></a>
+                        <?php if (isset($userId)): ?>
+                            <BR /><?php echo $this->followIdeaButton($userId, $id['idea_id']); ?>
+                        <?php endif; ?>
+                    </LI>
+                <?php endforeach; ?>
+            </OL>
+        <?php endif; ?>
+    </div>
+    <?php endif; ?>
+
+    <?php if (isset($project) && count($project) > 0): ?>
+        <div id="project-result">
+            <H2><?php echo $this->translate('Projects'); ?> (<?php echo count($project); ?>)</H2>
+            <OL>
+                <?php foreach ($project as $proj): ?>
+                    <LI> <a href="<?php echo $this->url('project/action-id', array('action' => 'view', 'id' => $proj['proj_id'])) ?>"><?php echo $proj['proj_title']; ?></a></LI>
+                <?php endforeach; ?>
+            </OL>
+        </div>
+    <?php endif; ?>
+
+
+    <?php if (isset($message) && count($message) > 0): ?>
+        <div id="message-result">
+            <H2><?php echo $this->translate('Messages'); ?> (<?php echo count($message); ?>)</H2>
+            <OL>
+                <?php foreach ($message as $item): ?>
+                    <LI> <a href="<?php echo $this->url('message/action-id', array('action' => ($item['msg_senderID'] == $userId ? 'sentItem' : 'view'), 'id' => $item['msg_id'])) ?>"><?php echo $item['msg_subject']; ?></a></LI>
+                <?php endforeach; ?>
+            </OL>
+        </div>
+    <?php endif; ?>
+
+    <?php if ( count($people) <1 && count($idea) <1 && count($project) <1 && count($message) <1 ){ ?>
+        <div id="search-result"><BR>
+		No matches were found... 
+        </div>
+	<?php } ?>
+
+<?php endif; ?>

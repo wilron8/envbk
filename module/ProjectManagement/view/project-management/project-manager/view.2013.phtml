@@ -1,0 +1,80 @@
+<?php 
+use DocumentManager\Model\ResourceType as Resource;
+?>
+<table>
+    <tr>
+        <td><?php echo $this->translate('Title'); ?></td>
+        <td><?php echo $this->project->proj_title; ?></td>
+    </tr>
+    <tr>
+        <td><?php echo $this->translate('Icon'); ?></td>
+        <td>
+            <img src="<?php echo $this->url('process-image', array('path' => $this->pathManager()->buildProjectRoutePath($project->proj_id,Resource::ICON,$project->proj_img))); ?>" />
+        </td>
+    </tr>
+    <tr>
+        <td><?php echo $this->translate('Source Idea'); ?>
+        </td>
+        <td><?php echo $this->ideaTable->getById($this->project->proj_srcIdea)->idea_title; ?>
+        </td>
+    </tr>
+    <tr>
+        <td><?php echo $this->translate('Description'); ?></td>
+        <td><?php echo $this->project->proj_descript; ?></td>
+    </tr>
+    <tr>
+        <td><?php echo $this->translate('Members'); ?>
+        </td>
+        <td>
+            <UL>
+                <?php if (count($this->members) > 0): ?>
+                    <?php foreach ($this->members as $mem): ?>
+                        <LI><a target="_blank" href="<?php echo $this->url('people/profile', array('id' => $mem['usr_id'])); ?>"><?php echo $this->displayName($mem); ?> <?php echo $mem['pMem_isPM'] == 1 ? "(Project Manager)" : "" ?></a></LI>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </UL>
+        </td>
+    </tr>
+    <tr>
+        <td><?php echo $this->translate('Status'); ?></td>
+        <td><?php echo ($project->proj_isClosed == 0 ? $this->translate('In Progress') : $this->translate('Closed')); ?></td>
+    </tr>
+</table>
+<div>
+    <?php if ($this->isOwner): ?>
+        <a href="<?php echo $this->url('project/action-id', array('action' => 'edit', 'id' => $project->proj_id)) ?>"><?php echo $this->translate('Update Project'); ?></a><BR>
+        <?php if ($project->proj_isClosed == 0): ?>
+            <a href="<?php echo $this->url('project/action-id', array('action' => 'close', 'id' => $project->proj_id)) ?>"><?php echo $this->translate('Close Project'); ?></a>
+        <?php endif; ?>
+        <a href="<?php echo $this->url('project/action-id', array('action' => 'remove', 'id' => $project->proj_id)) ?>"><?php echo $this->translate('Remove Project'); ?></a>
+    <?php elseif (!$projectMember->isMember($userId, $project->proj_id)): ?>
+        <?php if ($project->proj_isClosed == 0): ?>
+            <a href="<?php echo $this->url('project/action-id', array('action' => 'join', 'id' => $project->proj_id)); ?>"><?php echo $this->translate('Ask to Join'); ?></a>
+        <?php endif; ?>
+    <?php endif; ?>
+    <BR /><a href='<?php echo $this->url('project/action-id', array('action' => 'reportProject', 'id' => $project->proj_id)); ?>'><?php echo $this->translate('Report Violation'); ?></a>
+</div>
+
+<BR />
+<SPAN style="width: 400px;border-bottom: 1px solid gray;display: inline-block;"><?php echo $this->translate('Comments'); ?></SPAN><BR /><BR />
+<?php if (count($commentList) > 0): ?>
+    <UL>
+        <?php foreach ($commentList as $com): ?>
+            <LI><a target="_blank" href="<?php echo $this->url('people/profile', array('id' => $com['usr_id'])); ?>"><?php echo $this->displayName($com); ?></a>:<BR />
+                <div>
+                    <?php echo $com['prjW_comment']; ?><BR />
+                    <?php if ($this->isOwner || $commentTable->isOwner($userId, $com['prjW_id'])): ?>
+                        <a href="<?php echo $this->url('project/comment', array('action' => 'delete', 'id' => $project->proj_id, 'comment' => $com['prjW_id'])) ?>"><?php echo $this->translate('Delete'); ?></a>
+                    <?php endif; ?>
+                </div>
+            </LI>
+        <?php endforeach; ?>
+    </UL>
+<?php endif; ?>
+<form method="post" action="<?php echo $this->url('project/comment', array('action' => 'create')); ?>">
+    <TEXTAREA name="prjW_comment"></TEXTAREA><BR />
+    <input type="hidden" name="prjW_projID" value="<?php echo $project->proj_id; ?>" />
+    <input type="submit" value="<?php echo $this->translate('Comment'); ?>" />
+</form>
+
+

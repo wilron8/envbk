@@ -1,0 +1,18 @@
+<!-- login widget -->
+    <div id="loginArea">
+		<form id="Login" enctype="multipart/form-data" name="Login" method="post" action="<?php echo $this->url('user',array('action'=>'signin'));?>">
+		<input type="hidden" name="xDPI" id="xDPI" value="">
+		<input type="hidden" name="yDPI" id="yDPI" value="">
+      <DL>
+        <DT><input name="usr_username" type="email" required placeholder="Username (Email)"></DT>
+        <DD><input name="rememberme" type="checkbox" id="rememberme" value="1"> <LABEL style="display: inline; color:white;" for="rememberme">Remember me</LABEL></DD>
+      </DL>
+      <DL>
+        <DT><input name="usr_password" type="password" required placeholder="Password"></DT>
+        <DD><a class="forgot_password" style="color: white; text-decoration:none; font-weight:bolder;" href="/forgot">Forgot password?</a></DD>
+      </DL>
+      <input value="Login" class="submit" type="submit">
+		</form>
+    </div>
+<!-- //login widget -->
+

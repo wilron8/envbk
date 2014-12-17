@@ -1,0 +1,14 @@
+<?php if (count($users) > 0): ?>
+    <ul style="margin: 0;padding: 0;">
+        <?php foreach ($users as $u): ?>
+            <li style="list-style-type: none">
+                <a style="text-decoration: none;" href="<?php echo $this->url('people/profile', array('id' => $u['usr_id'])); ?>">
+                    <?php echo $this->usrHelper()->getIcon($u); ?>
+                    <?php echo $this->displayName($u); ?>
+                </a>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+<?php else: ?>
+    <p><i>There is no user following this idea!</i></p>
+<?php endif; ?>

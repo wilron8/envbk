@@ -1,0 +1,21 @@
+<?php echo $this->headLink()->appendStylesheet($this->basePath() . '/extjs4/ux/form/field/BoxSelect.css'); ?>
+<?php $this->headStyle()->captureStart() ?>
+
+div.proj-mem-list{display:inline-block;}
+<?php $this->headStyle()->captureEnd() ?>
+<?php echo $this->filterErrors($form); ?>
+<script type="text/javascript">
+    LApp.formData =<?php echo json_encode($form->getValues()); ?>;
+    LApp.editMode=true;
+    LApp.projid = "<?php echo $project->proj_id;?>";
+    LApp.projStoreURL = "<?php echo $this->url('project/api', array('action' => 'getMember'), array('query' => array('id' => $project->proj_id))); ?>";
+    //LApp.mrs = <?php echo $project->proj_isMemberShipOpen; ?>;
+    LApp.imageSrc = "<?php echo $this->url('process-image', array('path' => $this->pathManager()->buildProjectRoutePath($project->proj_id, \DocumentManager\Model\ResourceType::ICON, $project->proj_img))); ?>";
+</script>
+
+<div class="box" style="padding: 10px;">
+    <div id="project-management-edit-panel">
+
+    </div>
+</div>
+

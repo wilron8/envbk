@@ -1,0 +1,23 @@
+<h3 style="text-decoration: underline;"><?php echo $this->translate('Experience');?></h3>
+<?php if (count($data) > 0): ?>
+    <table>
+        <?php foreach ($data as $d): ?>
+            <tr>
+                <td style="width: 130px;">
+                    <?php echo $d['xp_name']; ?>
+                </td>
+                <td>
+                    <?php echo $d['xp_jobTitle']; ?>
+                </td>
+                <td style="width: 130px;">
+                    <?php echo $d['xp_fromDate']; ?>
+                </td>
+                <td>
+                    <?php echo $d['xp_toDate']; ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+<?php else: ?>
+    <i><?php echo $this->translate('(There is no experience data)'); ?></i>
+<?php endif; ?>

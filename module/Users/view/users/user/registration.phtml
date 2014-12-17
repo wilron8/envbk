@@ -1,0 +1,63 @@
+<?php //echo 'Current testval: '.$testval; ?>
+<?php //echo $this->filterErrors($form);        ?>
+<?php //echo $this->listSuccess($this->context->success);         ?>
+<?php if(isset($isPost) && $isPost):?>
+<?php echo $this->formElementErrors($form); ?>  
+<?php //var_dump($form->getData()); ?>
+<?php endif;?>
+
+<script src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
+<script>
+    //source :http://yiyujia.blogspot.com/2011/10/ext-js-4-recaptcha-widget.html
+    
+    Ext.define('ReCaptcha',
+            {
+                extend: 'Ext.Component',
+                alias: 'widget.recaptcha',
+                onRender: function(ct, position) {
+                    var me = this;
+                    me.callParent(arguments);
+
+                    me.recaptcha = me.el.createChild({
+                        tag: "div",
+                        'id': me.recaptchaId
+                    });
+
+                    Recaptcha.create(me.publickey, me.recaptcha.id, {
+                        theme: me.theme,
+                        lang: me.lang,
+                        callback: Recaptcha.focus_response_field
+                    });
+
+                    //me.recaptcha.setWidth(me.el.getWidth(true));
+
+                },
+                getChallenge: function() {
+                    return Recaptcha.get_challenge();
+                },
+                getResponse: function() {
+                    return Recaptcha.get_response();
+                }
+
+            });
+</script>
+<script type="text/javascript">
+    LApp.formData =<?php echo json_encode($data); ?>;
+    LApp.captchaKey = '<?php echo $captchaKey;?>';
+</script>
+
+<div id="user-registration-panel">
+    <?php //print_r($_SERVER); 
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+            $ipAddress = 'client - '.$_SERVER['HTTP_CLIENT_IP'];
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ipAddress = 'forward - '. $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $ipAddress = 'remote - '. $_SERVER['REMOTE_ADDR'];
+        }
+
+        echo $ipAddress;
+
+    ?>
+
+</div>

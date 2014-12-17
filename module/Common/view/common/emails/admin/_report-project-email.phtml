@@ -1,0 +1,26 @@
+<p><?php echo sprintf($this->translate('THIS IS BEING SENT FROM AN UNMONITORED MAILBOX. PLEASE DO
+    NOT REPLY TO THIS EMAIL. IF YOU HAVE QUESTIONS, PLEASE
+    CONTACT %shelp@linspira.com%s.'), '<a href="mailto:help@linspira.com">', '</a>'); ?></p>
+
+<p><?php echo sprintf($this->translate('Dear Admin Team')); ?>,</p>
+
+
+<p>
+    <?php echo sprintf($this->translate("There is a report violation of a project:  %s %s %s."),'<a href="'.$this->url('project/action-id', array('action'=>'view','id'=>$project->proj_id),array('force_canonical' => true)).'">',$project->proj_title,'</a>');?></p>
+<p><?php echo $this->translate('Reason: ');?><blockquote><?php echo $report->vp_comments;?></blockquote> </p>
+<p><?php echo $this->translate("The reporting user is:");?> 
+    <a href="<?php echo $this->url('people/profile', array('id'=>$reporter->usr_id),array('force_canonical' => true)); ?>"> <?php echo $reporter->displayName(); ?></a>
+</p>
+<p>
+    <?php echo $this->translate("The owner of the project is:");?> 
+    <a href="<?php echo $this->url('people/profile', array('id'=>$owner['usr_id']),array('force_canonical' => true)); ?>">  <?php echo $this->displayName($owner); ?></a>
+</p>
+
+
+<p>
+    <?php echo $this->translate('Sincerely,'); ?>
+</p>
+<p>
+    <?php echo sprintf($this->translate('Customer Service at %sLinspira.com%s [Tokyo, Japan]'), '<a href="http://linspira.com">', '</a>'); ?><br />
+
+

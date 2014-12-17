@@ -1,0 +1,48 @@
+﻿@charset "utf-8";
+
+.clearfix:after{content:""; display:block; clear:both;}
+hr{clear:both; border:0; height:1px; background:#7d9cc3; mamrgin:0; padding:0;}
+
+/* feedTop ------------------------------------------------------------------------------- */
+
+#feedTop{width:930px; margin:0; padding:0;}
+#feedTop div.person {float:right; width:680px; height:36px; padding:10px; background-color:#5880b3;}
+#feedTop div.profile{float:left ; width:200px; height:36px; padding:10px; background-color:#5880b3; color:#fff;}
+#feedTop div.profile span{position:relative; bottom:10px;}
+
+/* feed ---------------------------------------------------------------------------------- */
+#feed{width:930px; margin:10px 0; padding:0; overflow:hidden; font-size:80%;}
+#feed div.feed1{float:left; width:200px; background-color:#eaeff5; padding:10px; margin:0;}
+#feed div.feed2{float:left; width:670px; background-color:#eaeff5; padding:10px; margin:0 10px;}
+#feed div.feed3{float:left; width:200px; background-color:#eaeff5; padding:10px; margin:0;}
+#feed div.feed1,
+#feed div.feed2,
+#feed div.feed3{padding-bottom:32768px; margin-bottom:-32768px;}
+
+/* feed1 --------------------------------------------------------------------------------- */
+ul{list-style:none; margin:0; padding:0;}
+ul li{padding:7px 0;}
+ol{list-style:none; margin:0; padding-left:1em;}
+ol li{padding:0 0 0 8px; background:url(/images/icn_link.png) 0 9px no-repeat;}
+
+/* feed2 --------------------------------------------------------------------------------- */
+
+div.box{width:450px; padding-bottom:20px;}
+dl{width:100%; clear:both;}
+dl dt{float:left; width:36px;}
+dl dd{float:left; width:80%; margin-left:10px;}
+
+div.projectIdea{padding-left:40px;}
+
+/* feed3 --------------------------------------------------------------------------------- */
+div.ttl{font-weight:bold;}
+div.link{margin:10px 0; padding:0 0 0 8px; background:url(/images/icn_link.png) 0 9px no-repeat;}
+
+/***********IDEA BLOCK*************/
+
+div.idea-block{
+    width:250px;
+    float: left;
+    border-radius: 5px;
+    border: 1px solid gray;
+}

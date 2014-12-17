@@ -1,0 +1,55 @@
+
+<!-- TopHeaderArea -->
+  <div id="TopHeaderArea">
+    <H1 id="logo"><a href="/"><img src="/images/Linspira-wh.png" alt="Linspira"></a></H1>
+<?PHP
+//Test if the User is connected
+if (!$this->laIdentity()) {
+	// display the login form
+	echo $this->laLoginWidget();
+} else {
+	?>
+	<div id="loginArea">
+		<div id="signOut">
+			<form action=""><input type="button" value="sign out" onclick="javascript: parent.location = '<?php echo $this->url('user', array('action' => 'logout')); ?>'"></form>
+		</div>
+	</div>
+<?PHP } ?>
+    <BR class="clear">
+  </div>
+<!-- //TopHeaderArea -->
+
+<!-- TopMainArea -->
+  <div id="TopMainArea"><BR><BR>
+    <div class="find" style="color: white; font-size:18px">
+      <P>Introducing "Linspira", the platform for innovations! </P><BR><BR><BR>
+      <div id="topSearchSpark"></div><BR><BR>
+      <UL>
+        <LI>&rarr; More about "Linspira" = Linked + Inspirations</LI>
+        <LI>&rarr; Watch our demo!</LI>
+      </UL>
+    </div>
+  </div>
+<!-- //TopMainArea -->
+
+<!-- TopJoinArea -->
+<?PHP
+	// Join Widget:
+	echo $this->laJoinWidget();
+?>
+<!-- //TopJoinArea -->
+
+<?php
+$this->headScript()->captureStart();
+?>
+	Ext.require('envitz.view.searchSpark');
+	Ext.onReady(function(){
+		LApp.searchSpark = Ext.create('envitz.view.searchSpark', {
+			renderTo: "topSearchSpark",
+			textFieldWidth: 450,
+			textFieldEmptyText: "Find what's going on!"
+		});
+	});
+<?php
+$this->headScript()->captureEnd();
+?>

@@ -1,0 +1,70 @@
+<?php if (count($paginator) > 0): ?>
+    <?php foreach ($paginator as $project): ?>
+        <div class="box_idea">
+            <div class="subject">
+                <H2 class="ttl_idea">
+                    <?php echo $this->projHelper()->getIcon($project); ?>
+                    <a href="<?php echo $this->url('project/action-id', array('action' => 'view', 'id' => $project->proj_id)) ?>"><?php echo $project->proj_title; ?></a></H2>
+                <?php if ($project->proj_hitCnt > 0) { ?>
+                    <div class="good_idea">
+                    <?php 
+                        //echo ($project->proj_isClosed ? "Closed" : "In Progress");
+                        if ($project->proj_isClosed == 1) {
+                            echo $this->translate('Closed');
+                        } else {
+                            echo ($project->proj_progress > 0) ? $this->translate('Progress: '.number_format($project->proj_progress,0).'%') : $this->translate('In Progress');                    
+                        } 
+                    ?>
+                        <img src="/images/icn_star.png" height="24" width="24"><SPAN><?php echo $project->proj_hitCnt; ?></SPAN></div>
+                <?php } ?>
+                <BR class="clear">
+            </div>
+            <div class="box1">
+                <DL>
+                    <DT>
+                    <?php $user = $this->projHelper()->getOwner($project->proj_id); ?>
+                    <?php echo $this->usrHelper()->getIcon($user); ?>
+                    <SPAN id="projectStarter">
+                        <?php echo $this->displayName($user); ?> 
+                    </SPAN>
+                    <SPAN id ="projectTime" class="time">started at <?php echo $project->proj_timeStamp; ?></SPAN>
+                    </DT>
+                    <DD>
+                        <a href="<?php echo $this->url('project/action-id', array('action' => 'view', 'id' => $project->proj_id)) ?>">
+                             <img src="<?php echo $this->url('process-image', array('path' => $this->pathManager()->buildProjectRoutePath($project->proj_id, \DocumentManager\Model\ResourceType::ICON, $project->proj_img))); ?>" height="210" width="340">
+                        </a> 
+                        <!-- //TODO: this image should be $project->proj_img-->
+                        <div class="idea_box">
+                            <div class="proj_desc_container"><?php echo $project->proj_descript; ?></div>
+                            <h5>
+                                <?php echo $this->translate("Members"); ?>:
+                            </h5>
+                            <UL>
+                                <?php
+                                if (count($members = $this->projMemTable->fetchMembers($project->proj_id)) > 0):
+                                    foreach ($members as $mem):
+                                        ?>
+                                         <LI style="list-style-type: none;display: block;height: 36px;margin: 5px;">
+                                            <a title="<?php echo $this->displayName($mem); ?>" target="_blank" href="<?php echo $this->url('people/profile', array('id' => $mem['usr_id'])); ?>">
+                                                <?php echo $this->usrHelper()->getIcon($mem); ?>
+                                                <?php echo $mem['pMem_isPM'] == 1 ? "(Project Manager)" : "" ?>
+                                            </a>
+                                        </LI>
+                                        <?php
+                                    endforeach;
+                                endif;
+                                ?>
+                            </UL>
+                        </div>
+                        <BR class="clear">
+                    </DD>
+                </DL>
+            </div>
+        </div>
+    <?php endforeach; ?>   
+<?php else: ?>
+    <P>You have not created any projects yet. <a href="<?php echo $this->url('idea/action', array('action' => 'view')) ?>">Click here to find an idea...</a></P>
+<?php endif; ?>
+<script type="text/javascript">
+    elemListInsertAttr(document.getElementsByClassName('proj_desc_container'),['rel="nofollow"','target="_blank"']);
+</script>

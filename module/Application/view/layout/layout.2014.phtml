@@ -1,0 +1,102 @@
+<?php 
+// <!DOCTYPE html>
+echo($this->doctype('HTML5'));
+//var_dump($this->url());
+echo ($_SERVER['REQUEST_URI'] );
+
+?>
+<html xml:lang="ja" xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="content-script-type" content="text/javascript" />
+	<meta http-equiv="content-style-type" content="text/css" />
+	<meta name="Content-Language" content="english" />
+	<meta http-equiv="CACHE-CONTROL" content="NO-CACHE" />
+	<meta http-equiv="PRAGMA" content="NO-CACHE" />
+	<meta http-equiv="EXPIRES" content="Sun, 01 Jul 2012 00:00:01 GMT" />
+	<meta name="DC.creator" content="Richie Bartlett Jr. - http://www.RichieBartlett.com/" />
+	<meta name="DC.language" content="en" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="imagetoolbar" content="no" />
+	<!-- meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" -->
+	<meta name="copyright" content="Copyright <?php echo(date("Y")); ?>" />
+	<meta name="keywords" content="idea evolution" />
+	<meta name="description" content="Linkspira - Where IDEAs evolve!" />
+	<meta name="Author" content="Richie Bartlett" />
+	<meta name="revisit-after" content="30 days" />
+	<meta name="distribution" content="global" />
+	<meta name="rating" content="general" />
+	<meta name="robots" content="index, follow" /> <!-- (Robot commands: All, None, Index, No Index, Follow, No Follow) -->
+	<meta name="GOOGLEBOT" content="NOARCHIVE" />
+
+	<link rel="shortcut icon" href="/images/favicon.ico" type="image/vnd.microsoft.icon" />
+	<link rel="shortcut icon" href="/images/favicon.ico" type="image/ico" />
+	<link rel="icon" href="/images/favicon.ico" type="image/ico" />
+
+	<?php echo $this->headTitle('Linspira.com: ' . $this->translate('Core ProtoType'))->setSeparator(' - ')->setAutoEscape(false); ?>
+	<?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0'); ?>
+
+
+<?PHP if ($_SERVER['REQUEST_URI']!=="/" && $_SERVER['REQUEST_URI']!=="/join" && $_SERVER['REQUEST_URI']!=="/signin" ) {  ?>
+	<script src="<?php echo $this->basePath(); ?>/extjs4/ext-all-dev.js"></script>
+	<link rel="stylesheet" href="<?php echo $this->basePath(); ?>/extjs4/packages/ext-theme-gray/build/resources/ext-theme-gray-all.css" />
+	<script src="<?php echo $this->basePath(); ?>/js/drawColor.HSB.js"></script>
+	<script src="<?php echo $this->basePath(); ?>/js/string.prototypes.js"></script>
+	<script src="<?php echo $this->basePath(); ?>/js/baseIncludes.js"></script>
+	<script type="text/javascript">
+		var LApp = {};
+		LApp.basePath = "<?php echo $this->basePath(); ?>";
+		LApp.messages = {};
+		LApp.t = function(key) {
+			if (this.messages[key]) {
+				return this.messages[key];
+			} else {
+				return key;
+			}
+		};
+	</script>
+<?PHP } ?>
+
+	<link rel="stylesheet" type="text/css" href="<?php echo $this->basePath(); ?>/css/lang-jp.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $this->basePath(); ?>/css/<?php echo ( $this->url()==="/" || $this->url()==="/join" || $this->url()==="/signin" ? "index" : "style"); ?>.css" />
+</head>
+<body>
+
+<?PHP if ($_SERVER['REQUEST_URI']==="/" || $_SERVER['REQUEST_URI']==="/join" || $_SERVER['REQUEST_URI']==="/signin" ) { ?>
+<img class="bg" src="/images/bg_index.jpg">
+<?PHP } ?>
+
+<!-- mainArea -->
+<div id="gamen">
+
+<?PHP
+if ($this->laIdentity()) {
+	echo $this->laMenuWidget();
+}
+
+echo $this->content;
+?>
+
+		<div style="clear: both"></div>
+
+<!-- TopFooterArea -->
+	<FOOTER>
+		<UL class="foot">
+			<LI><a href="/">Link Aide</a></LI>
+			<LI><a href="/legal/privacy">Privacy</a></LI>
+			<LI><a href="/legal/tos.php">Terms</a></LI>
+			<LI><a href="/help">Help</a></LI>
+		</UL>
+		<div class="copyright">Linspira &copy; <?php echo(date("Y")); ?>
+			<?php echo $this->translate('All rights reserved.'); ?>
+		</div><!-- Designed & written by Richie Bartlett, Jr. -->
+		<BR class="clear" />
+	</FOOTER>
+<!-- //TopFooterArea -->
+
+</div>
+<!-- //mainArea -->
+
+</body>
+</html>

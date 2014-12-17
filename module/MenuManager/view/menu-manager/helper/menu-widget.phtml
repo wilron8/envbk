@@ -1,0 +1,29 @@
+<script type="text/javascript">
+	LApp.count = {
+<?PHP if ( !$this->laIdentity() ) { ?>
+		messages : 0, 
+		people : {
+			follower : 0,
+			following : 0,
+			total : 0 
+		},
+		ideas : 0, 
+		projects : 0 
+<?PHP } else { ?>
+		messages : <?php echo count($messages) . ", \n"; ?>
+		people : {
+			follower : <?php echo $followers; ?>,
+			following : <?php echo $following; ?>,
+			total : <?php echo count($people) . " \n"; ?>
+		},
+		ideas : <?php echo count($ideas) . ", \n"; ?>
+		projects : <?php echo count($projects) . " \n"; ?>
+<?PHP } ?>
+	};
+
+	Ext.require('envitz.view.NAVtool');
+	Ext.onReady(function(){
+		LApp.navTool = Ext.create('envitz.view.NAVtool', {renderTo: "naviToolBar"});
+	});
+</script>
+<NAV id="naviToolBar"></NAV>

@@ -1,0 +1,75 @@
+<?php $this->headLink()->appendStylesheet($this->basePath() . '/extjs4/ux/form/field/BoxSelect.css'); ?>
+
+<script type="text/javascript">
+    LApp.formData =<?php echo json_encode($data); ?>;
+    LApp.isReply = true;
+</script>
+<?php ?>
+
+<div class="box">
+    <div  id="message-view-panel"></div>
+    <?php foreach ($msgs as $msg): ?>
+        <div class="msg_box" id="record<?php echo $msg['msg_id']; ?>" style="border-top: 2px solid #5880B3;padding: 10px;">
+            <div class="header">
+                <div class="sender">
+                    <?php echo $this->usrHelper()->getIcon($msg);?>
+                    <?php
+                        if(isset($_SERVER['HTTPS'])){
+                            $protocol = ($_SERVER['HTTPS'] && $_SERVER['HTTPS'] != "off") ? "https" : "http";
+                        } else {
+                            $protocol = 'http';
+                        }                    
+                    ?>
+                    <img class="to" src="<?php echo $protocol. "://" .$_SERVER['SERVER_NAME']; ?>/images/arrow_right.png" />
+                    <?php echo $this->msgHelper()->getRecipients($msg['msg_id']); ?>
+                </div>
+                <div class="del">
+                    <img class="del" src="<?php echo $this->basePath(); ?>/images/del.png"
+                         <?php if ($this->laIdentity()->usr_id == $msg['msg_senderID']): ?>
+                             url = "<?php echo $this->url('message/action-id', array('action' => 'delete', 'id' => $msg['msg_id'])); ?>"
+                         <?php else: ?>
+                             url = "<?php echo $this->url('message/action-id', array('action' => 'deleteMsg2', 'id' => $msg['msg2_id'])); ?>"
+                         <?php endif; ?>
+                         sender = "<?php echo $this->displayName($msg); ?>" 
+						 recordID = "<?php echo $msg['msg_id']; ?>"
+                         />
+                </div>
+                <div class="date">
+                    <?php echo $msg['msg_timeStamp']; ?>
+                </div>
+            </div>
+            <div class="body">
+                <?php echo $msg['msg_body']; ?>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</div>
+<?php
+$this->inlineScript()->captureStart();
+?>
+Ext.require('envitz.view.DeleteMessage');
+Ext.onReady(function(){
+	Ext.select('img.del').on('click',function(dom){
+		var el = Ext.get(this);
+		var recordID = el.getAttribute('recordID');
+		var email = Ext.get('record' + recordID);
+		var url = el.getAttribute('url');
+		var sender = el.getAttribute('sender');
+		var message = email.down('[class=body]').el.getHTML();
+		var timeStamp = Ext.util.Format.stripTags(email.down('[class=date]').el.getHTML());
+		
+		message = Ext.util.Format.stripTags(message.replace(/<br>/g, '\n'));
+		Ext.create('envitz.view.DeleteMessage', {
+			message: Ext.util.Format.trim(message),
+			sender: sender,
+			timeStamp: Ext.util.Format.trim(timeStamp),
+			URL: url,
+			recordID: recordID
+		}).show();
+	});
+	
+});
+elemListInsertAttr(document.getElementsByClassName('body'),['rel="nofollow"','target="_blank"']);
+<?php
+$this->inlineScript()->captureEnd();
+?>

@@ -1,0 +1,36 @@
+<?php
+$form = $this->form;
+$form->prepare();
+$form->setAttribute('method', 'post');
+?>
+<div class="box">
+    <div class="subject"><H2><?php echo $this->translate('Forgot password?'); ?></H2></div>
+    <div style="margin:10px;">
+        <?php if ($this->error): ?>
+            <span><?php echo $this->translate('We cannot find this email in the system. Please check the email again'); ?>.</span>
+        <?php endif; ?>
+        <div style="margin: 10px 0;">
+            <p><?php echo $this->translate('Enter the registerd email address'); ?></p>
+        </div>
+        <?php echo $this->form()->openTag($form); ?>
+        <table>
+            <tr>
+                <td style="width: 100px;"><?php echo $this->translate($this->formLabel($form->get('email'))); ?></td>
+                <td><?php echo $this->formElement($form->get('email')); ?></td>
+            </tr>
+            <tr>
+                <td>
+
+                </td>
+                <td>
+                    <input type="submit" value="<?php echo $this->translate('Send'); ?>" />
+                    <input type="submit" onclick="window.location = '/'; return false;" value="<?php echo $this->translate('Cancel'); ?>" />
+                </td>
+            </tr>
+        </table>
+        <?php echo $this->form()->closeTag() ?>
+    </div>
+
+</div>
+
+

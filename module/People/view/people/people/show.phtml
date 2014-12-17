@@ -1,0 +1,77 @@
+<?php $this->headStyle()->captureStart() ?>
+
+ul.tab{display:block;min-width:80%;}
+div.clear-tab{clear:both;border-bottom:2px solid #5880B3;}
+ul.tab li{display:inline-block;list-style-type:none;min-width:120px;float:right;}
+ul.tab li a{display:block;text-decoration:none; background-color:gray;padding:10px;color:white;}
+ul.tab li a.selected{background-color:darkblue;}
+div.tab-content.display{display:block;}
+div.tab-content.hide{display:none;}
+<?php $this->headStyle()->captureEnd() ?>
+<script type="text/javascript">
+    LApp.page={
+        followingCnt:<?php echo empty($user->usr_followingCnt) ? 0 : $user->usr_followingCnt; ?>,
+        followerCnt:<?php echo empty($user->usr_followerCnt) ? 0 : $user->usr_followerCnt; ?>,
+        ideaCnt:<?= $this->usrHelper()->countIdea($user->usr_id); ?>,
+        projectCnt:<?= $this->usrHelper()->countProject($user->usr_id);?>
+    };
+    LApp.personid = "<?php echo $user->usr_id;?>";
+    
+</script>
+<div class="box">
+    <div class="subject">
+        <H2>
+            <!--<img src="<?php //echo $this->url('process-image', array('path' => $this->pathManager()->buildUserRoutePath($user->usr_id, Resource::ICON, $user->usr_icon)));   ?>" height="32" />--> 
+            <?php echo $this->usrHelper()->getIcon($user); ?>
+            <?php echo $user->usr_displayName; ?>
+            <div class="follow" style="float: right;display: inline-block;width: 40px;padding-top: 10px;">
+                <?php echo $this->usrHelper()->follow($user->usr_id); ?>
+            </div>
+        </H2></div>
+    <div style="margin:10px;">
+        <?php if ($isOwner): ?>
+            <a style="float:right;" href="<?php echo $this->url('people/action-id', array('action' => 'edit', 'id' => $userId)) ?>"><I class="icon-edit"></I></a>
+        <?php endif; ?>
+        <P><?php echo $user->usr_about; ?></P>
+        <table>
+            <tr>
+                <td><?php echo $this->translate('Birthday'); ?>:</td>
+                <td><?php echo $this->usrHelper()->formatDob($user->usr_dob); ?></td>
+            </tr>
+            <tr>
+                <td><?php echo $this->translate('Gender'); ?>:</td>
+                <td>
+                    <?php echo $this->usrHelper()->getGender($user->usr_gender); ?>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;"><?php echo $this->translate('Language'); ?>:</td>
+                <td>
+                    <?php echo $this->usrHelper()->getLangList($user->usr_id); ?>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;"><?php echo $this->translate('Location'); ?>:</td>
+                <td>
+                    <?php echo $this->usrHelper()->getLocationList($user->usr_id); ?>
+                </td>
+            </tr>
+            <tr style="vertical-align: top;">
+                <td><?php echo $this->translate('Skills'); ?>:</td>
+                <td>
+                    <?php echo $this->usrHelper()->getSkillList($user->usr_id); ?>
+                </td>
+            </tr>
+            <tr style="vertical-align: top;">
+                <td><?php echo $this->translate('Certifications'); ?>:</td>
+                <td>
+                    <?php echo $this->usrHelper()->getCertList($user->usr_id); ?>
+                </td>
+            </tr>
+        </table>
+        <?php echo $this->usrHelper()->getContactList($user->usr_id); ?> 
+        <?php echo $this->usrHelper()->getEdList($user->usr_id); ?>
+        <?php echo $this->usrHelper()->getXpList($user->usr_id); ?>
+    </div>
+</div>
+<div id="people-profile-tab-panel"></div>

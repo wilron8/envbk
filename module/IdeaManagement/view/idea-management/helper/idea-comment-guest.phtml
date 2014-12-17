@@ -1,0 +1,21 @@
+<?php if (count($commentList) > 0): ?>
+    <?php foreach ($commentList as $com): ?><!-- Begin comment block -->
+        <div>
+            <div class="res_photo">
+                <?php echo $this->usrHelper()->getIcon($com); ?>
+            </div>
+            <DL>
+                <DT><SPAN class="commenter"><a target="_blank" href="<?php echo $this->url('people/profile', array('id' => $com['usr_id'])); ?>"><?php echo $this->displayName($com); ?></a></SPAN><SPAN class="time"> <?php echo $com['iComm_timeStamp']; ?></SPAN></DT>
+                <DD class="body"><?php echo $com['iComm_comment']; ?></DD>
+            </DL>
+            <div class="navi" <?php if ($com['iComm_readOnly'] != 1) {
+                    echo "id=\"navi_{$com['iComm_id']}\"";
+                } ?>></div>
+        </div><!-- //END comment block -->
+
+    <?php endforeach; ?>
+        <div class="clear"></div>
+        <div style="font-style: italic;background-color: gray;color:white;padding: 20px;border-radius: 5px;">
+            <P>To view more comments, please <a href="<?php echo $this->url('user',array('action'=>'signin'));?>">login</a> or <a href="<?php echo $this->url('user',array('action'=>'join'));?>">join us</a> to be a part of an exclusive club of idealist!</P>
+    </div>
+<?php endif; ?>

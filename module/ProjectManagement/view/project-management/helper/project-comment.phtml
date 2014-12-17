@@ -1,0 +1,86 @@
+<?php
+$naviArray = array();
+?>
+<?php if (count($commentList) > 0): ?>
+    <?php foreach ($commentList as $com): ?><!-- Begin comment block -->
+        <div 
+        <?php
+        if ($com['prjW_readOnly'] != 1):
+            $naviArray[] = $com['prjW_id'];
+            ?>
+                id="userComm<?php echo $com['prjW_id'] ?>"
+                data-commentId="<?php echo $com['prjW_id']; ?>"
+                data-isCommenter="<?php echo $com['prjW_userid'] == $this->laIdentity()->usr_id ? 1 : 0; ?>"
+            <?php endif; ?>>
+            <div class="res_photo">
+                <?php echo $this->usrHelper()->getIcon($com); ?>
+            </div>
+            <DL>
+                <DT><SPAN class="commenter"><a target="_blank" href="<?php echo $this->url('people/profile', array('id' => $com['usr_id'])); ?>"><?php echo $this->displayName($com); ?></a></SPAN><SPAN class="time"> posted at <?php echo $com['prjW_timeStamp']; ?></SPAN></DT>
+                <DD class="body"><?php echo $com['prjW_comment']; ?></DD>
+            </DL>
+            <div class="navi" <?php if ($com['prjW_readOnly'] != 1) {
+            echo "id=\"navi_{$com['prjW_id']}\"";
+        } ?>></div>
+        </div><!-- //END comment block -->
+        <div class="clear"></div>
+    <?php endforeach; ?>
+<?php endif; ?>
+<BR id="userCommsEnd" class="clear">
+
+<div id="userCommAdds" name="userCommAdds"></div>
+<BR class="clear">
+
+
+<script type="text/javascript">
+    Ext.require([
+        'envitz.view.envitzEditor',
+        'envitz.view.ReportViolation',
+        'envitz.view.RemoveComment',
+        'envitz.view.CommentMenu',
+        'envitz.view.CommentInsert'
+    ]);
+
+    LApp.thisPage = {
+	mainID: <?php echo $project->proj_id;  ?>,
+	isOwner: <?php echo $project->proj_id == $this->laIdentity()->usr_id ? 1 : 0;  ?>,
+      navi: [<?php
+for ($prjW = 0; $prjW < count($naviArray); $prjW++) {
+    echo $naviArray[$prjW] . ( $prjW < count($naviArray) - 1 ? "," : "");
+}
+?>]
+    };
+
+    LApp.createNAVI = function(naviID) {
+        try {
+            new Ext.create('envitz.view.CommentMenu', {
+                selector: 'userComm' + naviID,
+                prjWDesc:true,
+                renderTo: 'navi_' + naviID,
+                reportUrl:'/project/comment/report/'+naviID,
+                removeUrl:'/project/comment/remove/'+LApp.thisPage.mainID+'/'+naviID,
+                commentId: naviID
+            });
+        } catch (e) {
+            if (Ext.isGecko)
+                console.debug(e);
+        }
+    };
+
+    Ext.onReady(function() {
+        try {
+            LApp.envitzEDIT = Ext.create('envitz.view.CommentInsert', {
+                url: '<?php echo $this->url('project/comment', array('action' => 'create')) ?>',
+                renderTo: 'userCommAdds'
+            });
+            LApp.envitzEDIT.down('#iComm_ideaId').setValue(LApp.thisPage.mainID);
+            Ext.Array.forEach(LApp.thisPage.navi, LApp.createNAVI);
+
+        } catch (e) {
+            if (Ext.isGecko)
+                console.debug(e);
+        }
+    });
+
+    elemListInsertAttr(document.getElementsByClassName('body'),['rel="nofollow"','target="_blank"']);
+</script>

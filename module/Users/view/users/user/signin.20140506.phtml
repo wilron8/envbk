@@ -1,0 +1,63 @@
+<H2>Login</H2>
+
+<?php echo $this->listErrors($context->errors); ?>
+
+<?php
+$form = $this->form;
+$form->prepare();
+$form->setAttribute('action', $this->url(NULL, array('controller' => 'Login', 'action' => 'signin')));
+$form->setAttribute('method', 'post');
+
+echo $this->form()->openTag($form);
+?>
+<DL class="form">
+    <DT><?php echo $this->formLabel($form->get('usr_username')); ?></DT>
+    <DD><?php
+        echo $this->formElement($form->get('usr_username'));
+        echo $this->formElementErrors($form->get('usr_username'));
+        ?></DD>
+
+    <DT><?php echo $this->formLabel($form->get('usr_password')); ?></DT>
+    <DD><?php
+        echo $this->formElement($form->get('usr_password'));
+        echo $this->formElementErrors($form->get('usr_password'));
+        ?></DD>
+    <DT><?php echo $this->formElement($form->get('rememberme')); ?> <LABEL style="display: inline;" for="rememberme"><?php echo $this->translate('Remember me'); ?></LABEL> </DT>
+
+    <DD><?php
+        echo $this->formElement($form->get('submit'));
+        echo $this->formElementErrors($form->get('submit'));
+        ?></DD>
+
+</DL>
+<?php echo $this->form()->closeTag() ?>
+
+<a href="<?php echo $this->url('user', array('action' => 'forgot')); ?>"><?php echo $this->translate('Forgot passoword?'); ?></a>
+<div style="clear: both"></div>
+<H2>New User</H2>
+<?php
+$joinform = $this->joinForm;
+$joinform->prepare();
+$joinform->setAttribute('method', 'post');
+$joinform->setAttribute('action', $this->url('user', array('action' => 'join')));
+echo $this->form()->openTag($joinform);
+?>
+<DL class="zend_form">
+
+    <DT><?php echo $this->translate($this->formLabel($joinform->get('join_fName'))); ?></DT>
+    <DD><?php
+        echo $this->formElement($joinform->get('join_fName'));
+        echo $this->formElementErrors($joinform->get('join_fName'));
+        ?></DD>
+    <DT><?php echo $this->formLabel($joinform->get('join_email')); ?></DT>
+    <DD><?php
+        echo $this->formElement($joinform->get('join_email'));
+        echo $this->formElementErrors($joinform->get('join_email'));
+        ?></DD>
+    <DD><?php
+        echo $this->formElement($joinform->get('submit'));
+        echo $this->formElementErrors($joinform->get('submit'));
+        ?></DD>
+
+</DL>
+<?php echo $this->form()->closeTag() ?>

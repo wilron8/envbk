@@ -1,0 +1,17 @@
+<div class="feed_box">
+    <div class="subject">
+        <H2>
+            <?= $this->usrHelper()->getIcon($user); ?> <?= $user->displayName(); ?> has started a project "<?= $project->proj_title;?>" on the idea "<?= $idea->idea_title; ?>"
+            <span class="date">
+                <?= $project->proj_timeStamp; ?>
+            </span>
+        </H2>
+    </div>
+    <div class="content">
+        <div class="title" style="font-size: 1.2em;margin-bottom: 15px;">
+            <a class="idea" href="<?= $this->url('project/action-id',['action'=>'view','id'=>$project->proj_id])?> "><?= $this->projHelper()->getIcon($project); ?><?= $project->proj_title; ?></a><BR>
+        </div>
+        
+        <?= $project->proj_descript; ?>
+    </div>
+</div>

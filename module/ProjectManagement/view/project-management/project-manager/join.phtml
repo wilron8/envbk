@@ -1,0 +1,5 @@
+<?php if ($success == true): ?>
+    <?php echo sprintf($this->translate('Your request is already sent to %s for approval.'), $owner->usr_fName); ?>
+<?php else: ?>
+    <?php echo $this->msg; ?>
+<?php endif; ?>

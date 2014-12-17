@@ -1,0 +1,13 @@
+
+<script type="text/javascript">
+    LApp.formData =<?php echo json_encode($form->getValues()) ?>;
+</script>
+
+<div class="passwordBox">
+    <div class="subject"><H2><?php echo $this->translate('Reset your password'); ?></H2></div>
+    <div>
+        <?php echo $this->filterErrors($form); ?>
+        <div id="user-reset-password-panel"></div>
+    </div>
+
+</div>

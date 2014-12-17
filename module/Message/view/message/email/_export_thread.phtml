@@ -1,0 +1,33 @@
+<?php
+    if(isset($_SERVER['HTTPS'])){
+        $protocol = ($_SERVER['HTTPS'] && $_SERVER['HTTPS'] != "off") ? "https" : "http";
+    } else {
+        $protocol = 'http';
+    }                    
+?>
+<?php foreach ($msgMain as $msg): ?>
+        <div class="msg_box" id="record<?php echo $msg['msg_id']; ?>" style="border-top: 2px solid #5880B3;padding: 10px;">
+            <div class="header">
+                <div class="sender">
+                    <!--<?php if ($msg['usr_icon'] === "" || $msg['usr_icon'] === NULL): ?>
+                        <a class="person" href="<?php echo $_SERVER['SERVER_NAME']. $this->url('people/profile', ['id' => $msg['usr_id']]); ?>">
+                            <span title="<?php echo $this->displayName($msg); ?>" class="noIconAvatar" style="height: 32px;width: 32px;display: inline-block;"></span>
+                        </a>
+                    <?php else: ?>                        
+                        <a class="person" href="<?php echo $_SERVER['SERVER_NAME']. $this->url('people/profile', ['id' =>$msg['usr_id']]); ?>">
+                            <img title="<?php echo $this->displayName($msg); ?>" alt="<?php echo $this->displayName($msg); ?>" src="<?php echo $protocol. "://" .$_SERVER['SERVER_NAME']. $this->url('process-image', array('path' => $this->pathManager()->buildUserRoutePath($msg['usr_id'], \DocumentManager\Model\ResourceType::ICON, $msg['usr_icon']))); ?>" style="height:32px;width:32px;" />
+                        </a>
+                    <?php endif; ?>-->
+                    <?php echo $this->usrHelper()->getIcon($msg);?>
+                    <img class="to" src="<?php echo $protocol. "://" .$_SERVER['SERVER_NAME']; ?>/images/arrow_right.png" />
+                    <?php echo $this->msgHelper()->getRecipients($msg['msg_id']); ?>
+                </div>                
+                <div class="date" style="float: right;">
+                    <?php echo $msg['msg_timeStamp']; ?>
+                </div>
+            </div>
+            <div class="body">
+                <?php echo $msg['msg_body']; ?>
+            </div>
+        </div>
+    <?php endforeach; ?>

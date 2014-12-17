@@ -1,0 +1,19 @@
+<?php if($comment['iComm_readOnly']!=1):?>
+<?php
+$this->inlineScript()->captureStart();
+?>
+Ext.require('envitz.view.CommentMenu');
+Ext.onReady(function(){
+    try{
+		new Ext.create('envitz.view.CommentMenu', {
+			selector: "userComm<?php echo $comment['iComm_id'] ?>",
+			renderTo: 'navi_<?php echo $comment['iComm_id']; ?>'
+		});
+    }catch(e){
+		console.log(e);
+    }
+});
+<?php
+$this->inlineScript()->captureEnd();
+?>
+<?php endif;?>

@@ -1,0 +1,17 @@
+<div class="feed_box">
+    <div class="subject">
+        <H2>
+            <?= $this->usrHelper()->getIcon($user); ?> <?= $user->displayName(); ?> has referenced "<?= $idea->idea_title; ?>"
+            <span class="date">
+                <?= $iRef->iRef_timeStamp; ?>
+            </span>
+        </H2>
+    </div>
+    <div class="content">
+        <div class="title" style="font-size: 1.2em;margin-bottom: 15px;">
+            <a class="idea" href="<?= $this->url('idea/action-id',['action'=>'view','id'=>$newIdea->idea_id])?> "><?= $this->ideaHelper()->getIcon($newIdea); ?><?= $newIdea->idea_title; ?></a><BR>
+        </div>
+        
+        <?= $newIdea->idea_descript; ?>
+    </div>
+</div>

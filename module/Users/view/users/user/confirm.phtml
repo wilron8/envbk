@@ -1,0 +1,76 @@
+<?php
+$this->inlineScript()->appendScript("
+    window.onbeforeunload=function(e){
+       // return 'Are you sure you want to cancel the signup?';
+
+    };
+    
+   var btn = document.getElementById('cancel');
+    btn.addEventListener('click',function(e){
+        var msg=confirm('Are you sure you want to cancel?');
+        if(!msg){
+            e.preventDefault();
+        }
+        
+    });
+");
+?>
+<?php if (count($this->errors) > 0): ?>
+    <ul>
+        <?php foreach ($this->errors as $err): ?>
+            <li><?php echo $err; ?></li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>
+<?php
+$form = $this->form;
+echo $this->form()->openTag($this->form);
+//echo $this->formCollection($this->form);
+//echo $this->form()->closeTag();
+echo $this->formElementErrors($form);
+?>
+<div style="padding:20px;width:940px;">
+    <div style="color:#FFFFFF;background-color:#5880B3;padding:15px 20px;">Sign up</div>
+    <div style="background-color:#EAEFF5;padding:32px;">
+        Please 	confirm your input and agree to Term of Service in order to complete registration.<br />
+        <table>
+            <tr><td style="vertical-align:top;">Email</td><td><?php echo $profile['email']; ?></td></tr>
+            <tr>
+                <td style="vertical-align:top;">Full Name</td>
+                <td>
+                    <?php echo $profile['fullname']; ?>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align:top;">Address</td>
+                <td>
+                    <?php echo $profile['address']; ?>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align:top;">Telephone</td>
+                <td>
+                    <?php echo $profile['phone']; ?>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align:top;">Language</td>
+                <td>
+                    <?php echo $profile['lang']; ?>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align:top;">&nbsp;</td>
+                <td>
+                    <?php echo $this->formElement($form->get('agree')); ?> I agree to <a target="_blank" href="/legal/tos.html">Term of Service</a>
+                </td>
+            </tr>
+        </table>
+        <?php echo $this->formElement($form->get('back')); ?>
+        <?php echo $this->formElement($form->get('done')); ?>
+        <?php echo $this->formElement($form->get('cancel')); ?>
+    </div>
+
+</div>
+
+<?php echo $this->form()->closeTag(); ?>
