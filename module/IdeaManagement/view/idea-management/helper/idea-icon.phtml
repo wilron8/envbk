@@ -1,8 +1,0 @@
-<a class="idea" href="<?= $this->url('idea/action-id',['action'=>'view','id'=>$idea_id]);?>">
-    <?php if ($idea_img === "" || $idea_img === NULL): ?>
-        <span class="icon-ideas" style="height: 32px;width: 32px;display: inline-block;"></span>
-    <?php else: ?>
-        <img src="<?php echo $this->url('process-image', array('path' => $this->pathManager()->buildIdeaRoutePath($idea_id, \DocumentManager\Model\ResourceType::ICON, $idea_img))); ?>" style="height:32px;width:32px;" />
-    <?php endif; ?>  
-</a>
-

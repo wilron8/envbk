@@ -1,9 +1,0 @@
-<span class="people_founfo_holder">
-<?php if ($followTable->isFollow($userId)): ?>
-    <a class="people-founfo" data-id="<?= $userId;?>" data-type="unfollow" title="<?php echo $this->translate('Unfollow'); ?>" href="<?php echo $this->url('people/action-id', array('action' => 'unfollow', 'id' => $userId)); ?>"><img src="<?php echo $this->basePath(); ?>/images/unfollow_star.png" height="24" width="24"></a>
-<?php else: ?>
-    <?php if ($this->usrPolicy()->canBeFollowed($userId)): ?>
-    <a class="people-founfo" data-id="<?= $userId;?>" data-type="follow" title="<?php echo $this->translate('Follow'); ?>" href="<?php echo $this->url('people/action-id', array('action' => 'follow', 'id' => $userId)); ?>"><img src="<?php echo $this->basePath(); ?>/images/icn_star.png" height="24" width="24"></a>
-    <?php endif; ?>
-<?php endif; ?>
-</span>

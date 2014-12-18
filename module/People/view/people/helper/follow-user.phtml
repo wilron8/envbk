@@ -1,5 +1,0 @@
-<?php if ($followTable->isFollow($userId)): ?>
-    <a href="<?php echo $this->url('people/action-id', array('action' => 'unfollow', 'id' => $userId)); ?>"><?php echo $this->translate('Unfollow'); ?></a>
-<?php else: ?>
-    <a href="<?php echo $this->url('people/action-id', array('action' => 'follow', 'id' => $userId)); ?>"><?php echo $this->translate('Follow'); ?></a>
-<?php endif; ?>
